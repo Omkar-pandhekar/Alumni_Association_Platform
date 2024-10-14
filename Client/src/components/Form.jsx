@@ -2,6 +2,7 @@ import Section from "./Section";
 import Heading from "./Heading";
 import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
+import { Link } from "react-router-dom";
 
 const Form = () => {
   return (
@@ -120,9 +121,11 @@ const Form = () => {
               <option value="student">Mechanical Engineering</option>
               <option value="student">Mechanical Engineering</option>
             </select>
-            <Button className="hidden lg:flex" href="#login">
-              Register
-            </Button>
+            <Link to="/profile">
+              <Button className="hidden lg:flex" href="#login">
+                Register
+              </Button>
+            </Link>
             <p className="text-white mt-4">
               Already have an account?
               <a

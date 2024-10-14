@@ -2,6 +2,7 @@ import Section from "./Section";
 import Heading from "./Heading";
 import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -21,16 +22,19 @@ const Login = () => {
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               type="password"
             />
-
-            <Button className="hidden lg:flex">Login</Button>
+            <Link to="/adminprofile">
+              <Button className="max-lg:">Login</Button>
+            </Link>
             <p className="text-white mt-4">
               Don&apos;t have an accout ?
-              <a
-                className="text-sm text-blue-500 -200 hover:underline mt-4"
-                href="#"
-              >
-                Login
-              </a>
+              <Link to="/signup">
+                <a
+                  className="text-sm text-blue-500 -200 hover:underline mt-4"
+                  href="#"
+                >
+                  Login
+                </a>
+              </Link>
             </p>
           </form>
         </div>

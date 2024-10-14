@@ -4,7 +4,7 @@ import Button from "./Button";
 
 const Contact = () => {
   return (
-    <Section>
+    <Section id="contact">
       <div className="relative z-1 max-w-[50rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
         <div className="w-[2rem] max-lg:w-full h-full px-6 bg-n-8 border border-n-6 rounded-[2rem] lg:w-auto even:py-14 odd:py-8 odd:my-4 backdrop-blur-sm ">
           <Heading className="md:max-2-md lg:max-w-2xl" title="Feedback" />

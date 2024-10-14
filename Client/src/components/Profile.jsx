@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Section from "./Section";
-import Benefits from "./Benefits";
+import AlumniFeatures from "./AlumniFeatures";
 
 const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
@@ -261,7 +261,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <Benefits />
+      <AlumniFeatures />
     </Section>
   );
 };

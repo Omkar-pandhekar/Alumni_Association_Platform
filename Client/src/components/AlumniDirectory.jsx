@@ -2,7 +2,7 @@ import { useState } from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 
-const AlumniTable = () => {
+const AlumniDirectory = () => {
   // Initial sample data for the table
   const [alumni, setAlumni] = useState([
     {
@@ -84,37 +84,14 @@ const AlumniTable = () => {
     },
   ]);
 
-  // State to manage the search input, category filter, and selected alumni
+  // State to manage the search input and category filter
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
-  const [selectedAlumni, setSelectedAlumni] = useState([]);
 
-  // Function to handle deleting selected rows
-  const handleDeleteSelected = () => {
-    setAlumni(alumni.filter((person) => !selectedAlumni.includes(person.id)));
-    setSelectedAlumni([]);
-  };
-
-  // Function to handle deleting a single row
+  // Function to handle deleting a row
+  // eslint-disable-next-line no-unused-vars
   const handleDelete = (id) => {
     setAlumni(alumni.filter((person) => person.id !== id));
-  };
-
-  // Handle selecting/deselecting a row
-  const handleSelect = (id) => {
-    if (selectedAlumni.includes(id)) {
-      setSelectedAlumni(selectedAlumni.filter((alumniId) => alumniId !== id));
-    } else {
-      setSelectedAlumni([...selectedAlumni, id]);
-    }
-  };
-
-  // Handle sending email to selected alumni
-  const handleSendEmail = () => {
-    const selectedContacts = alumni
-      .filter((person) => selectedAlumni.includes(person.id))
-      .map((person) => person.contact);
-    alert(`Sending email to: ${selectedContacts.join(", ")}`);
   };
 
   // Filtered alumni based on search term and category
@@ -162,32 +139,13 @@ const AlumniTable = () => {
             <table className="min-w-full bg-n-8 max-lg:h-90">
               <thead className="sticky top-0 bg-n-7">
                 <tr>
-                  <th className="py-2 px-4 border-b-2 border-n-7">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedAlumni(filteredAlumni.map((p) => p.id));
-                        } else {
-                          setSelectedAlumni([]);
-                        }
-                      }}
-                      checked={
-                        selectedAlumni.length > 0 &&
-                        selectedAlumni.length === filteredAlumni.length
-                      }
-                    />
-                  </th>
                   <th className="py-2 px-4 border-b-2 border-n-7">Name</th>
                   <th className="py-2 px-4 border-b-2 border-n-7">Placed In</th>
-                  <th className="py-2 px-4 border-b-2 border-gray-300">
+                  <th className="py-2 px-4 border-b-2 border-n-7">
                     Year of Graduation
                   </th>
-                  <th className="py-2 px-4 border-b-2 border-gray-300">
+                  <th className="py-2 px-4 border-b-2 border-n-7">
                     Contact Number
-                  </th>
-                  <th className="py-2 px-4 border-b-2 border-gray-300">
-                    Actions
                   </th>
                 </tr>
               </thead>
@@ -195,30 +153,16 @@ const AlumniTable = () => {
                 {filteredAlumni.length > 0 ? (
                   filteredAlumni.map((person) => (
                     <tr key={person.id} className="border-t border-gray-300">
-                      <td className="py-3 px-4">
-                        <input
-                          type="checkbox"
-                          checked={selectedAlumni.includes(person.id)}
-                          onChange={() => handleSelect(person.id)}
-                        />
-                      </td>
                       <td className="py-3 px-4">{person.name}</td>
                       <td className="py-3 px-4">{person.placedIn}</td>
                       <td className="py-3 px-4">{person.year}</td>
                       <td className="py-3 px-4">{person.contact}</td>
-                      <td className="py-3 px-4">
-                        <button
-                          onClick={() => handleDelete(person.id)}
-                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                        >
-                          Delete
-                        </button>
-                      </td>
+                      <td className="py-3 px-4"></td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="py-4 text-center">
+                    <td colSpan="5" className="py-4 text-center">
                       No results found.
                     </td>
                   </tr>
@@ -226,28 +170,10 @@ const AlumniTable = () => {
               </tbody>
             </table>
           </div>
-
-          {/* Actions for Selected Alumni */}
-          {selectedAlumni.length > 0 && (
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={handleSendEmail}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Send Email to Selected
-              </button>
-              <button
-                onClick={handleDeleteSelected}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                Delete Selected
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </Section>
   );
 };
 
-export default AlumniTable;
+export default AlumniDirectory;

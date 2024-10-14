@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import Form from "./components/Form";
 import Profile from "./components/Profile";
 import AlumniTable from "./components/AlumniTable";
+import AlumniDirectory from "./components/AlumniDirectory";
+import AdminProfile from "./components/AdminProfile";
 
 const Layout = () => {
   return (
@@ -43,6 +45,14 @@ const App = () => {
         {
           path: "/alumnitable",
           element: <AlumniTable />,
+        },
+        {
+          path: "/alumnidirectory",
+          element: <AlumniDirectory />,
+        },
+        {
+          path: "/adminprofile",
+          element: <AdminProfile />,
         },
       ],
     },
