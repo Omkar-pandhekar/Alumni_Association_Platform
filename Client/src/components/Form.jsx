@@ -206,13 +206,6 @@ const Form = () => {
           </form>
             <p className="text-white mt-4">
               Already have an account?
-<<<<<<< HEAD
-              <Link
-                className="text-sm text-blue-500 -200 hover:underline mt-4"
-                to={'/login'}
-              >
-                Login
-=======
               <Link to="/login">
                 <a
                   className="text-sm text-blue-500 -200 hover:underline mt-4"
@@ -220,7 +213,6 @@ const Form = () => {
                 >
                   Login
                 </a>
->>>>>>> 1a2325f8a88781747f9ba08933bd84ac7ba53d4c
               </Link>
             </p>
         </div>

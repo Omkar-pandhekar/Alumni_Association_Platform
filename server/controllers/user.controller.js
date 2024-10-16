@@ -48,6 +48,7 @@ export const postLogin = async (req,res) => {
   } 
   
     console.log('SuccessFully Login');
+    res.status(201).json('success');
     // sendCookie(user,res);
 
   //  return res.redirect('/profile');

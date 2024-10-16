@@ -4,11 +4,13 @@ import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 const Login = () => {
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
+  const navigate = useNavigate();
+
+
 
   const HandleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +18,12 @@ const Login = () => {
       email,
       password
     })
-    .then((result) => result.json(result))
+    .then((result) => {
+    
+      if(result.data ==='success'){
+        navigate('/profile');
+      }
+    })
     .catch(err => console.log(err));
   }
 
