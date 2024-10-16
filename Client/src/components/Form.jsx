@@ -39,7 +39,7 @@ const Form = () => {
     );
 
     axios
-      .post("http://localhost:3000/signup", {
+      .post("http://localhost:3000/api/v1/user/signup", {
         fname,
         lname,
         email,
