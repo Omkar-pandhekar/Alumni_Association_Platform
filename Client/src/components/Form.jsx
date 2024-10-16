@@ -3,9 +3,8 @@ import Heading from "./Heading";
 import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
 import { useState } from "react";
-import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
-
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const Form = () => {
   // To Take the input
@@ -25,9 +24,10 @@ const Form = () => {
     e.preventDefault();
 
     const yearOfAdmissionNumber = parseInt(yearOfAdmission);
-    const yearOfGraduationNumber = parseInt(yearOfGraduation)
+    const yearOfGraduationNumber = parseInt(yearOfGraduation);
 
-    console.log(fname,
+    console.log(
+      fname,
       lname,
       email,
       password,
@@ -35,9 +35,9 @@ const Form = () => {
       role,
       yearOfAdmission,
       yearOfGraduation,
-      field);
+      field
+    );
 
-      
     axios
       .post("http://localhost:3000/signup", {
         fname,
@@ -46,13 +46,13 @@ const Form = () => {
         password,
         gender,
         role,
-        yearOfAdmission : yearOfAdmissionNumber,
-        yearOfGraduation : yearOfGraduationNumber,
+        yearOfAdmission: yearOfAdmissionNumber,
+        yearOfGraduation: yearOfGraduationNumber,
         field,
       })
       .then((result) => {
-        console.log(result)
-        navigate('/login')
+        console.log(result);
+        navigate("/login");
       })
       .catch((err) => console.log(err));
   };
@@ -80,7 +80,7 @@ const Form = () => {
                 placeholder="Last Name"
                 className="bg-n-7 text-n-3 border-0 rounded-md p-2 w-1/2 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
                 type="text"
-                name='lname'
+                name="lname"
                 onChange={(e) => setLname(e.target.value)}
               />
             </div>
@@ -88,7 +88,7 @@ const Form = () => {
               placeholder="Email"
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               type="email"
-              name='email'
+              name="email"
               onChange={(e) => setEmail(e.target.value)}
             />
             {/* <input
@@ -189,43 +189,36 @@ const Form = () => {
               onChange={(e) => setField(e.target.value)}
             >
               <option value=""> select Field</option>
-              <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+              <option value="Computer Science and Engineering">
+                Computer Science and Engineering
+              </option>
               <option value="Artificial Intelligence and Machine Learning">
                 Artificial Intelligence and Machine Learning
               </option>
-              <option value="Electronics and Telecommunication">Electronics and Telecommunication</option>
-              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Electronics and Telecommunication">
+                Electronics and Telecommunication
+              </option>
+              <option value="Mechanical Engineering">
+                Mechanical Engineering
+              </option>
               <option value="Civil Engineering">Civil Engineering </option>
             </select>
-           
-            <Button className="hidden lg:flex" >
+
+            <Button className="hidden lg:flex">
               <button type="submit"> Register</button>
-              
             </Button>
-           
           </form>
-            <p className="text-white mt-4">
-              Already have an account?
-<<<<<<< HEAD
-              <Link
-                className="text-sm text-blue-500 -200 hover:underline mt-4"
-                to={'/login'}
-              >
-                Login
-=======
-              <Link to="/login">
-                <a
-                  className="text-sm text-blue-500 -200 hover:underline mt-4"
-                  href="#"
-                >
-                  Login
-                </a>
->>>>>>> 1a2325f8a88781747f9ba08933bd84ac7ba53d4c
-              </Link>
-            </p>
+          <p className="text-white mt-4">
+            Already have an account?
+            <Link
+              className="text-sm text-blue-500 -200 hover:underline mt-4"
+              to={"/login"}
+            >
+              Login
+            </Link>
+          </p>
         </div>
       </div>
-    
     </Section>
   );
 };

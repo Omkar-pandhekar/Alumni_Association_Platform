@@ -6,10 +6,10 @@ const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
   const [profileInfo, setProfileInfo] = useState({
-    name: "John Doe",
+    name: "Rajat Ranvir",
     bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
     location: "San Francisco, CA",
-    email: "john.doe@email.com",
+    email: "rajatranvir@gmail.com",
     phone: "+1 234 567 890",
     skills: ["React", "Node.js", "JavaScript", "Tailwind CSS", "MongoDB"],
     profilePhoto: "https://via.placeholder.com/150", // Default profile photo
