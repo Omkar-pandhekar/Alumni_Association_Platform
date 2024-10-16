@@ -125,7 +125,7 @@ export const AlumniFeatures = [
     backgroundUrl: "./src/assets/benefits/card-1.svg",
     iconUrl: benefitIcon1,
     imageUrl: network,
-    linkUrl: "/alumnitable",
+    linkUrl: "/alumnidirectory",
   },
   {
     id: "1",

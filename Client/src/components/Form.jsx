@@ -128,12 +128,14 @@ const Form = () => {
             </Link>
             <p className="text-white mt-4">
               Already have an account?
-              <a
-                className="text-sm text-blue-500 -200 hover:underline mt-4"
-                href="#"
-              >
-                Login
-              </a>
+              <Link to="/login">
+                <a
+                  className="text-sm text-blue-500 -200 hover:underline mt-4"
+                  href="#"
+                >
+                  Login
+                </a>
+              </Link>
             </p>
           </form>
         </div>
