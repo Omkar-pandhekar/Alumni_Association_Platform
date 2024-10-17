@@ -9,6 +9,9 @@ import Profile from "./components/Profile";
 import AlumniTable from "./components/AlumniTable";
 import AlumniDirectory from "./components/AlumniDirectory";
 import AdminProfile from "./components/AdminProfile";
+import Donation from "./components/Donation";
+// import ProtectedRoute from "./components/ProtectedRoutes";
+import StudentProfile from "./components/StudentProfile";
 
 const Layout = () => {
   return (
@@ -40,19 +43,55 @@ const App = () => {
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: (
+            // <ProtectedRoute>
+            <Profile />
+            // </ProtectedRoute>
+          ),
         },
         {
           path: "/alumnitable",
-          element: <AlumniTable />,
+          element: (
+            // <ProtectedRoute>
+            <AlumniTable />
+            // </ProtectedRoute>
+          ),
         },
         {
           path: "/alumnidirectory",
-          element: <AlumniDirectory />,
+          element: (
+            // <ProtectedRoute>
+            <AlumniDirectory />
+            // </ProtectedRoute>
+          ),
         },
         {
           path: "/adminprofile",
-          element: <AdminProfile />,
+          element: (
+            // <ProtectedRoute>
+            <AdminProfile />
+            // </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/donation",
+          element: (
+            // <ProtectedRoute>
+            <Donation />
+            // </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/student",
+          element: (
+            // <ProtectedRoute>
+            <StudentProfile />
+            // </ProtectedRoute>
+          ),
+        },
+        {
+          path: "*",
+          element: {},
         },
       ],
     },

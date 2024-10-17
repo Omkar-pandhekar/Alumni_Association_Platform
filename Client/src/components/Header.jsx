@@ -11,6 +11,7 @@ import { useState } from "react";
 const Header = () => {
   // const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleNavigation = () => {
     if (openNavigation) {
@@ -20,6 +21,13 @@ const Header = () => {
       setOpenNavigation(true);
       disablePageScroll();
     }
+  };
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    setIsLoggedIn(false);
+    enablePageScroll();
+    setOpenNavigation(false);
   };
 
   // const handleClick = () => {
@@ -62,17 +70,23 @@ const Header = () => {
 
           <HamburgerMenu />
         </nav>
-
-        <Link
-          to="/signup"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-          New account
-        </Link>
-        <Link to="/login">
-          <Button className="hidden lg:flex">Sign in</Button>
-        </Link>
-
+        {!isLoggedIn ? (
+          <>
+            <Link
+              to="/signup"
+              className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+            >
+              New account
+            </Link>
+            <Link to="/login">
+              <Button className="hidden lg:flex">Sign in</Button>
+            </Link>
+          </>
+        ) : (
+          <Button className="hidden lg:flex" onClick={handleLogout}>
+            Log out
+          </Button>
+        )}
         <Button
           className="ml-auto lg:hidden"
           px="px-3"

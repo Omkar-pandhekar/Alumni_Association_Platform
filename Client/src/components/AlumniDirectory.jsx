@@ -157,7 +157,6 @@ const AlumniDirectory = () => {
                       <td className="py-3 px-4">{person.placedIn}</td>
                       <td className="py-3 px-4">{person.year}</td>
                       <td className="py-3 px-4">{person.contact}</td>
-                      <td className="py-3 px-4"></td>
                     </tr>
                   ))
                 ) : (

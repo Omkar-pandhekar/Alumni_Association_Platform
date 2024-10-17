@@ -135,7 +135,7 @@ export const AlumniFeatures = [
     iconUrl: benefitIcon2,
     imageUrl: donation,
     light: true,
-    linkUrl: "",
+    linkUrl: "/donation",
   },
   {
     id: "2",
