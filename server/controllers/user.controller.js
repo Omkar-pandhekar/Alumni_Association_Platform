@@ -4,6 +4,7 @@ import {sendCookie}  from "../utils/cookieparse.util.js";
 export const postRegister = async (req, res) => {
     console.log(req.body);
     const {
+      fname,
       lname,
       email,
       password,
@@ -18,6 +19,7 @@ export const postRegister = async (req, res) => {
     if(user) res.redirect('/login');
     const HashedPassword = await bcrypt.hash(password,10);
     await User.create({
+      fname,
       lname,
       email,
       password : HashedPassword,

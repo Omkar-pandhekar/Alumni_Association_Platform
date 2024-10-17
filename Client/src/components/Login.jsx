@@ -4,7 +4,7 @@ import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
 import { useState } from "react";
 import axios from "axios";
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 const Login = () => {
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
@@ -14,7 +14,7 @@ const Login = () => {
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/login',{
+    axios.post('http://localhost:3000/api/v1/user/login',{
       email,
       password
     })
