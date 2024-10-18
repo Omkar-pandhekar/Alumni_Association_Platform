@@ -1,12 +1,12 @@
 import express from 'express';
-import { postLogin, postRegister,getSignUp,getLogin } from '../controllers/user.controller.js';
+import { getLogout, postLogin, postRegister } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
 
-router.get('/signup',getSignUp);
-router.get('/login',getLogin);
 
+// Get Api
+router.get('/logout',getLogout);
 
 // Post Api 
 router.post('/signup',postRegister);

@@ -128,10 +128,12 @@ const Form = () => {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-            >
+             >
               <option value="">Select Role</option>
               <option value="alumni">Alumni</option>
               <option value="student">Student</option>
+              <option value="admin"> Admin</option>
+
             </select>
 
             {/* Year of Admission and Graduation */}
