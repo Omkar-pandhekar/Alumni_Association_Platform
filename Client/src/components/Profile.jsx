@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Section from "./Section";
-import AlumniFeatures from "./AlumniFeatures";
 
 const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
   const [profileInfo, setProfileInfo] = useState({
     name: "Rajat Ranvir",
-    bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
+    bio: "Add bio",
     location: "San Francisco, CA",
     email: "rajatranvir@gmail.com",
     phone: "+1 234 567 890",
@@ -81,7 +80,7 @@ const Profile = () => {
 
   return (
     <Section>
-      <div className="max-w-[100rem] mx-auto mt-8 mb-10 p-6 ">
+      <div className="max-w-[100rem] mx-auto mb-10 p-6 ">
         {/* Background Image */}
         <div
           className="h-48 w-full bg-cover bg-center rounded-t-lg relative"
@@ -261,7 +260,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <AlumniFeatures />
     </Section>
   );
 };

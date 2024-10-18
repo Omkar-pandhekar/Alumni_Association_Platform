@@ -8,10 +8,13 @@ import Form from "./components/Form";
 import Profile from "./components/Profile";
 import AlumniTable from "./components/AlumniTable";
 import AlumniDirectory from "./components/AlumniDirectory";
-import AdminProfile from "./components/AdminProfile";
+import AdminProfile from "./pages/AdminProfile";
 import Donation from "./components/Donation";
 // import ProtectedRoute from "./components/ProtectedRoutes";
-import StudentProfile from "./components/StudentProfile";
+// import StudentProfile from "./components/StudentProfile";
+import Contact from "./components/Contact";
+import Alumni from "./pages/Alumni";
+import Student from "./pages/Student";
 
 const Layout = () => {
   return (
@@ -40,6 +43,14 @@ const App = () => {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/alumni",
+          element: <Alumni />,
         },
         {
           path: "/profile",
@@ -81,17 +92,21 @@ const App = () => {
             // </ProtectedRoute>
           ),
         },
-        {
-          path: "/student",
-          element: (
-            // <ProtectedRoute>
-            <StudentProfile />
-            // </ProtectedRoute>
-          ),
-        },
+        // {
+        //   path: "/student",
+        //   element: (
+        //     // <ProtectedRoute>
+        //     <StudentProfile />
+        //     // </ProtectedRoute>
+        //   ),
+        // },
         {
           path: "*",
           element: {},
+        },
+        {
+          path: "/student",
+          element: <Student />,
         },
       ],
     },

@@ -3,7 +3,7 @@ import Heading from "./Heading";
 import Button from "./Button";
 import { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
   const [fullname, setFullName] = useState();
@@ -21,7 +21,7 @@ const Contact = () => {
       })
       .then((result) => {
         if (result.data === "submit") {
-          navigate("/#contact");
+          navigate("/alumni");
           console.log("Feedback Submitted !");
         }
       })
@@ -59,7 +59,7 @@ const Contact = () => {
               onChange={(e) => setFeedback(e.target.value)}
             />
 
-            <Button className="hidden lg:flex">
+            <Button className="hidden lg:flex" onClick={HandleSubmit}>
               <button type="submit">Submit</button>
             </Button>
           </form>

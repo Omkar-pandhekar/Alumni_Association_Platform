@@ -70,7 +70,7 @@ export const benefits = [
     backgroundUrl: "./src/assets/benefits/card-1.svg",
     iconUrl: benefitIcon1,
     imageUrl: network,
-    linkUrl: "/alumnitable",
+    linkUrl: "/",
   },
   {
     id: "1",
@@ -80,7 +80,7 @@ export const benefits = [
     iconUrl: benefitIcon2,
     imageUrl: donation,
     light: true,
-    linkUrl: "/alumnidirectory",
+    linkUrl: "/",
   },
   {
     id: "2",
@@ -118,6 +118,117 @@ export const benefits = [
 ];
 
 export const AlumniFeatures = [
+  {
+    id: "0",
+    title: "Join the Alumni Network",
+    text: "Register to join our alumni community, update your profile, and stay connected with peers.",
+    backgroundUrl: "./src/assets/benefits/card-1.svg",
+    iconUrl: benefitIcon1,
+    imageUrl: network,
+    linkUrl: "/alumnidirectory",
+  },
+  {
+    id: "1",
+    title: "Make a Donation",
+    text: "Contribute to scholarships, research, and projects. Your donation makes a difference!",
+    backgroundUrl: "./src/assets/benefits/card-2.svg",
+    iconUrl: benefitIcon2,
+    imageUrl: donation,
+    light: true,
+    linkUrl: "/donation",
+  },
+  {
+    id: "2",
+    title: "Explore Career Opportunities",
+    text: "Access job postings, connect with professionals, and explore new career opportunities.",
+    backgroundUrl: "./src/assets/benefits/card-3.svg",
+    iconUrl: benefitIcon3,
+    imageUrl: oppurtunity,
+  },
+  {
+    id: "3",
+    title: "Discover Alumni Success Stories",
+    text: "Read about fellow alumni's achievements and let their stories motivate your journey.",
+    backgroundUrl: "./src/assets/benefits/card-4.svg",
+    iconUrl: benefitIcon4,
+    imageUrl: success,
+    light: true,
+  },
+  {
+    id: "4",
+    title: "Stay Involved Through Events",
+    text: "Register for alumni events and reunions to stay engaged and connected with your community.",
+    backgroundUrl: "./src/assets/benefits/card-5.svg",
+    iconUrl: benefitIcon1,
+    imageUrl: event,
+  },
+  {
+    id: "5",
+    title: "Provide Feedback",
+    text: "Help us improve by sharing feedback and participating in surveys. Your voice matters!",
+    backgroundUrl: "./src/assets/benefits/card-6.svg",
+    iconUrl: benefitIcon2,
+    imageUrl: feedback,
+  },
+];
+
+export const StudentFeatures = [
+  {
+    id: "0",
+    title: "View the Alumnis of College",
+    text: "Register to join our alumni community, update your profile, and stay connected with peers.",
+    backgroundUrl: "./src/assets/benefits/card-1.svg",
+    iconUrl: benefitIcon1,
+    imageUrl: network,
+    linkUrl: "/alumnidirectory",
+  },
+  {
+    id: "1",
+    title: "Scholarship/Grant Information",
+    text: "Discover scholarships and grants from alumni and the college. Apply easily through the platform to support your studies.",
+    backgroundUrl: "./src/assets/benefits/card-2.svg",
+    iconUrl: benefitIcon2,
+    imageUrl: donation,
+    light: true,
+    linkUrl: "",
+  },
+  {
+    id: "2",
+    title: "Explore Career Opportunities",
+    text: "Access job postings, connect with professionals, and explore new career opportunities.",
+    backgroundUrl: "./src/assets/benefits/card-3.svg",
+    iconUrl: benefitIcon3,
+    imageUrl: oppurtunity,
+  },
+  {
+    id: "3",
+    title: "Discover Alumni Success Stories",
+    text: "Read about fellow alumni's achievements and let their stories motivate your journey.",
+    backgroundUrl: "./src/assets/benefits/card-4.svg",
+    iconUrl: benefitIcon4,
+    imageUrl: success,
+    light: true,
+  },
+  {
+    id: "4",
+    title: "Stay Involved Through Events",
+    text: "Register for alumni events and reunions to stay engaged and connected with your community.",
+    backgroundUrl: "./src/assets/benefits/card-5.svg",
+    iconUrl: benefitIcon1,
+    imageUrl: event,
+  },
+  {
+    id: "5",
+    title: "Provide Feedback",
+    text: "Help us improve by sharing feedback and participating in surveys. Your voice matters!",
+    backgroundUrl: "./src/assets/benefits/card-6.svg",
+    iconUrl: benefitIcon2,
+    imageUrl: feedback,
+    linkUrl: "/contact",
+  },
+];
+
+export const AdminFeatures = [
   {
     id: "0",
     title: "Join the Alumni Network",
