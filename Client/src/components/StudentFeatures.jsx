@@ -1,4 +1,4 @@
-import { benefits } from "../constants";
+import { StudentFeatures } from "../constants";
 import Heading from "./Heading";
 import Section from "./Section";
 import Arrow from "../assets/svg/Arrow";
@@ -20,9 +20,9 @@ const BenefitCard = ({ item }) => {
           <h5 className="h5 mb-5">{item.title}</h5>
           <p className="body-2 mb-6 text-n-3">{item.text}</p>
           <div className="flex items-center mt-auto">
-            <img src={item.iconUrl} width={48} height={48} alt={item.title} />
+            {/* <img src={item.iconUrl} width={48} height={48} alt={item.title} /> */}
             <p className="ml-auto font-code text-xs font-bold text-n-1 uppercase tracking-wider">
-              Explore more
+              View
             </p>
             <Arrow />
           </div>
@@ -54,13 +54,10 @@ const Benefits = () => {
   return (
     <Section id="events">
       <div className="container relative z-2">
-        <Heading
-          className="md:max-w-md lg:max-w-4xl"
-          title="Stay Connected and Empowered with Our Alumni Platform"
-        />
+        <Heading className="md:max-w-md lg:max-w-4xl" title="Features" />
 
         <div className="flex flex-wrap gap-10 mb-10 justify-center">
-          {benefits.map((item, index) => (
+          {StudentFeatures.map((item, index) => (
             <BenefitCard item={item} key={index} />
           ))}
         </div>

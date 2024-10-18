@@ -1,6 +1,6 @@
-import AlumniTable from "./AlumniTable";
-import Heading from "./Heading";
-import Section from "./Section";
+import AlumniTable from "../components/AlumniTable";
+import Heading from "../components/Heading";
+import Section from "../components/Section";
 
 const AdminProfile = () => {
   return (
