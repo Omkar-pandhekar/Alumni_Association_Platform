@@ -4,6 +4,7 @@ import Section from "./Section";
 const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
+  //Pass here the object of profileInfo after logging in
   const [profileInfo, setProfileInfo] = useState({
     name: "Rajat Ranvir",
     bio: "Add bio",

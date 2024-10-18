@@ -70,7 +70,7 @@ export const benefits = [
     backgroundUrl: "./src/assets/benefits/card-1.svg",
     iconUrl: benefitIcon1,
     imageUrl: network,
-    linkUrl: "/",
+    linkUrl: "/login",
   },
   {
     id: "1",
@@ -80,7 +80,7 @@ export const benefits = [
     iconUrl: benefitIcon2,
     imageUrl: donation,
     light: true,
-    linkUrl: "/",
+    linkUrl: "/login",
   },
   {
     id: "2",
@@ -89,6 +89,7 @@ export const benefits = [
     backgroundUrl: "./src/assets/benefits/card-3.svg",
     iconUrl: benefitIcon3,
     imageUrl: oppurtunity,
+    linkUrl: "/login",
   },
   {
     id: "3",
@@ -98,6 +99,7 @@ export const benefits = [
     iconUrl: benefitIcon4,
     imageUrl: success,
     light: true,
+    linkUrl: "/login",
   },
   {
     id: "4",
@@ -106,6 +108,7 @@ export const benefits = [
     backgroundUrl: "./src/assets/benefits/card-5.svg",
     iconUrl: benefitIcon1,
     imageUrl: event,
+    linkUrl: "/login",
   },
   {
     id: "5",
@@ -114,6 +117,7 @@ export const benefits = [
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon2,
     imageUrl: feedback,
+    linkUrl: "/login",
   },
 ];
 
@@ -169,6 +173,7 @@ export const AlumniFeatures = [
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon2,
     imageUrl: feedback,
+    linkUrl: "/contact",
   },
 ];
 
