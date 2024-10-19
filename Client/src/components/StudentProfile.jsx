@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Section from "./Section";
+import AlumniFeatures from "./AlumniFeatures";
+import axios from "axios";
 
 const Profile = () => {
+  axios.get('/login')
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
-  //Pass here the object of profileInfo after logging in
   const [profileInfo, setProfileInfo] = useState({
     name: "Rajat Ranvir",
-    bio: "Add bio",
+    bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
     location: "San Francisco, CA",
     email: "rajatranvir@gmail.com",
     phone: "+1 234 567 890",
@@ -15,7 +17,7 @@ const Profile = () => {
     profilePhoto: "https://via.placeholder.com/150", // Default profile photo
     backgroundImage: "https://via.placeholder.com/800x200", // Default background image
   });
-  
+
   const [posts, setPosts] = useState([
     { id: 1, content: "Excited to start working on a new full-stack project!" },
     { id: 2, content: "Just completed a 100-day JavaScript coding challenge!" },
@@ -81,7 +83,7 @@ const Profile = () => {
 
   return (
     <Section>
-      <div className="max-w-[100rem] mx-auto mb-10 p-6 ">
+      <div className="max-w-[100rem] mx-auto mt-8 mb-10 p-6 ">
         {/* Background Image */}
         <div
           className="h-48 w-full bg-cover bg-center rounded-t-lg relative"
@@ -261,6 +263,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <AlumniFeatures />
     </Section>
   );
 };

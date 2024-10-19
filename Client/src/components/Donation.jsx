@@ -1,8 +1,13 @@
+
+
 import Section from "./Section";
 import Heading from "./Heading";
 import Button from "./Button";
+import axios from  'axios';
+import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import ScholarshipTable from "./ScholarshipTable";
+import { useState } from "react";
 // import { useState } from "react";
 
 const Donation = () => {
@@ -11,6 +16,29 @@ const Donation = () => {
   //   setSelectedFees(fees);
   //   e.preventDefault(); // Update fees when a scholarship is selected
   // };
+  const [phoneNumber,setPhoneNumber] = useState();
+  const [item,setItem] = useState();
+  const [quantity,setQuantity] = useState();
+  const navigate = useNavigate();
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    
+
+    axios
+      .post("http://localhost:3000/api/v1/donate/donation", {
+        phoneNumber,
+        item,
+        quantity
+      })
+      .then((result) => {
+        console.log(result);
+        navigate("/donation");
+      })
+      .catch((err) => console.log(err));
+  }
+
+
+
 
   return (
     <Section>
@@ -24,29 +52,35 @@ const Donation = () => {
             title="Infrastructure 
             Donation"
           />
-          <form className="flex flex-col" action="post">
+          <form className="flex flex-col" action="post" onSubmit={HandleSubmit}>
             <input
               placeholder="Phone Number "
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               type="tel"
-              name="password"
+              name="phoneNumber"
+              onChange={(e) => setPhoneNumber(e.target.value)}
+
             />
             <select
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               id="infrastructure"
-              name="infrastructure"
+              name="item"
+              value={item}
+              onChange={e => setItem(e.target.value)}
               required
             >
-              <option value="">Select Infrastructure to Donate</option>
-              <option value="male">Systems</option>
-              <option value="female">Desks</option>
-              <option value="other">Plants</option>
+              <option value="">Select Infrastructure to Donate </option>
+              <option value="systems">Systems</option>
+              <option value="Desks">Desks</option>
+              <option value="plants">Plants</option>
             </select>
             <input
               placeholder="Quantity"
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               type="number"
               name="quantity"
+              value={quantity}
+              onChange={e => setQuantity(e.target.value)}
               required
             />
             <Button className="hidden lg:flex">Donate</Button>
@@ -76,8 +110,8 @@ const Donation = () => {
               name="password"
             />
             <ScholarshipTable />
-            {/* onFeesSelect={handleFeesSelection}  */}
-            {/* {selectedFees > 0 && ( // Only show if there are fees to display
+            {/* onFeesSelect={handleFeesSelection} 
+            {selectedFees > 0 && ( // Only show if there are fees to display
               <div className="mt-4">
                 <h3 className="text-lg font-semibold">
                   Total Fees to Pay: ${selectedFees}
@@ -96,3 +130,4 @@ const Donation = () => {
 };
 
 export default Donation;
+
