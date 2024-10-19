@@ -96,7 +96,7 @@ const ScholarshipTable = (props) => {
   const uniqueCategory = [...new Set(alumni.map((person) => person.category))];
 
   return (
-    <div className="relative z-1 max-w-[80rem] mx-2 text-center mb-[1rem] md:mb-20 lg:mb-[6.25rem]">
+    <div className="relative z-1 max-w-[80rem] mx-2 text-center mb-[1rem] md:mb-10 lg:mb-[6.25rem]">
       <div className=" px-6 bg-n-8 border border-n-6 rounded-[2rem] lg:w-90 even:py-14 odd:py-8 odd:my-4 lg:backdrop-blur-sm overflow-y-auto max-h-50">
         {/* Search and Category Filter */}
         <div className="flex justify-between mb-6">

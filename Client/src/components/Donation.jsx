@@ -99,7 +99,7 @@ const Donation = () => {
             <ScholarshipTable onFeesSelect={handleFeesSelection} />
 
             {selectedPerson && (
-              <div className="mt-4">
+              <div className="mb-5">
                 <h3 className="text-lg font-semibold">
                   Selected Student: {selectedPerson.name}
                 </h3>

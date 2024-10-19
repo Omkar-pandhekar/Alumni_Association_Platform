@@ -54,10 +54,7 @@ const Benefits = () => {
   return (
     <Section id="events">
       <div className="container relative z-2">
-        <Heading
-          className="md:max-w-md lg:max-w-4xl"
-          title="Stay Connected and Empowered with Our Alumni Platform"
-        />
+        <Heading className="md:max-w-md lg:max-w-4xl" title="Features" />
 
         <div className="flex flex-wrap gap-10 mb-10 justify-center">
           {AlumniFeatures.map((item, index) => (

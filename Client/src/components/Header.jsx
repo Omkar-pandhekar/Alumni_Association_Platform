@@ -7,23 +7,20 @@ import Button from "./Button";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { HamburgerMenu } from "./design/Header";
 import { useEffect, useState } from "react";
-import axios from  "axios";
+import axios from "axios";
 const Header = () => {
   // const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-
-  useEffect(()=>{
-    const token = localStorage.getItem('authToken');
-    if(token) {
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
       setIsLoggedIn(true);
       // isLoggedIn = true;
     }
-  },[]);
-
-
+  }, []);
 
   const toggleNavigation = () => {
     if (openNavigation) {
@@ -37,16 +34,18 @@ const Header = () => {
 
   const handleLogout = () => {
     // Add your logout logic here
-        axios.get("http://localhost:3000/api/v1/user/logout")
-        .then(res => {
-          if(res.data.status){
-            console.log(localStorage.getItem('authToken'));
-            localStorage.removeItem('authToken');
-            console.log(localStorage.getItem('authToken'));
-            setIsLoggedIn(false);
-            navigate('/login');
-          }
-        }).catch(err => console.log(err));
+    axios
+      .get("http://localhost:3000/api/v1/user/logout")
+      .then((res) => {
+        if (res.data.status) {
+          console.log(localStorage.getItem("authToken"));
+          localStorage.removeItem("authToken");
+          console.log(localStorage.getItem("authToken"));
+          setIsLoggedIn(false);
+          navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
 
     enablePageScroll();
     setOpenNavigation(false);
@@ -105,8 +104,11 @@ const Header = () => {
             </Link>
           </>
         ) : (
-          <Button className="hidden lg:flex" >
-            <button  type='submit' onClick={handleLogout}>  Log out </button>
+          <Button className="hidden lg:flex">
+            <button type="submit" onClick={handleLogout}>
+              {" "}
+              Log out{" "}
+            </button>
           </Button>
         )}
 
