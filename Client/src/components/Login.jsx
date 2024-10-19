@@ -6,40 +6,39 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
-  const [email,setEmail] = useState();
-  const [password,setPassword] = useState();
-  const [role,setRole] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [role, setRole] = useState();
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
-
   const HandleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/api/v1/user/login',{
-      email,
-      password,
-      role
-    })
-    .then((result) => {
-      console.log(result);
-      console.log(result.data);
-      console.log(result.data.token);
-      console.log(result.data.message);
+    axios
+      .post("http://localhost:3000/api/v1/user/login", {
+        email,
+        password,
+        role,
+      })
+      .then((result) => {
+        console.log(result);
+        console.log(result.data);
+        console.log(result.data.token);
+        console.log(result.data.message);
 
-      if(result.data.token) {
-        localStorage.setItem('authToken',result.data.token);
-      }
-      if(result.data.status && result.data.message==='admin'){
-        navigate('/adminprofile');
-      }else if (result.data.status && result.data.message==='alumni'){
-        navigate('/profile');
-      }else {
-        navigate('/student');
-      }
-    })
-    .catch(err => console.log(err));
-  }
-
+        if (result.data.token) {
+          localStorage.setItem("authToken", result.data.token);
+        }
+        if (result.data.status && result.data.message === "admin") {
+          navigate("/adminprofile");
+        } else if (result.data.status && result.data.message === "alumni") {
+          navigate("/alumni");
+        } else {
+          navigate("/student");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Section>
@@ -62,19 +61,18 @@ const Login = () => {
               name="password"
               onChange={(e) => setPassword(e.target.value)}
             />
-             <select
+            <select
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
               id="role"
               name="role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-             >
+            >
               <option value="">Select Role</option>
               <option value="alumni">Alumni</option>
               <option value="student">Student</option>
               <option value="admin">Admin</option>
-
             </select>
             <Button className="hidden lg:flex">Login</Button>
           </form>

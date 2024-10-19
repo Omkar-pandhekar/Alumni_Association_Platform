@@ -53,6 +53,10 @@ const App = () => {
           element: <Alumni />,
         },
         {
+          path: "/student",
+          element: <Student />,
+        },
+        {
           path: "/profile",
           element: (
             // <ProtectedRoute>

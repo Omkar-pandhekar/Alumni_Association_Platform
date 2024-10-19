@@ -1,99 +1,74 @@
 import { useState } from "react";
 
-// { onFeesSelect }
-const AlumniDirectory = () => {
-  // Initial sample data for the table
-  //   const handleSelection = (fees, e) => {
-  //     onFeesSelect(fees); // Call the function with the selected fees
-  //     e.preventDefault();
-  //   };
+const ScholarshipTable = (props) => {
+  const handleSelection = (person) => {
+    props.onFeesSelect(person);
+  };
   const [alumni, setAlumni] = useState([
     {
       id: 1,
       name: "John Doe",
-      placedIn: "Google",
-      year: 2020,
-      contact: "123-456-7890",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 2,
       name: "Jane Smith",
-      placedIn: "Microsoft",
-      year: 2019,
-      contact: "987-654-3210",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 3,
       name: "Michael Lee",
-      placedIn: "Facebook",
-      year: 2021,
-      contact: "456-789-1234",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 4,
       name: "Emma Wilson",
-      placedIn: "Amazon",
-      year: 2022,
-      contact: "654-321-9870",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 5,
       name: "Daniel Evans",
-      placedIn: "Netflix",
-      year: 2018,
-      contact: "234-567-8901",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 6,
       name: "Sophia Martinez",
-      placedIn: "Apple",
-      year: 2020,
-      contact: "321-654-9870",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 7,
       name: "Liam Brown",
-      placedIn: "Tesla",
-      year: 2021,
-      contact: "654-987-1234",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 8,
       name: "Olivia Davis",
-      placedIn: "Adobe",
-      year: 2019,
-      contact: "987-321-6540",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 9,
       name: "Noah Johnson",
-      placedIn: "Intel",
-      year: 2020,
-      contact: "432-987-6543",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 10,
       name: "Ava Taylor",
-      placedIn: "SpaceX",
-      year: 2021,
-      contact: "890-123-4567",
+      category: "Open",
       fees: 10000,
     },
     {
       id: 11,
       name: "Elijah Moore",
-      placedIn: "IBM",
-      year: 2018,
-      contact: "321-789-4561",
+      category: "Open",
       fees: 10000,
     },
   ]);
@@ -113,12 +88,12 @@ const AlumniDirectory = () => {
     const matchesSearch = person.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase().trim());
-    const matchesCategory = category === "" || person.placedIn === category;
+    const matchesCategory = category === "" || person.category === category;
     return matchesSearch && matchesCategory;
   });
 
   // Get unique companies for the category filter
-  const uniqueCompanies = [...new Set(alumni.map((person) => person.placedIn))];
+  const uniqueCategory = [...new Set(alumni.map((person) => person.category))];
 
   return (
     <div className="relative z-1 max-w-[80rem] mx-2 text-center mb-[1rem] md:mb-20 lg:mb-[6.25rem]">
@@ -138,9 +113,9 @@ const AlumniDirectory = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">All Companies</option>
-            {uniqueCompanies.map((company, index) => (
-              <option key={index} value={company}>
-                {company}
+            {uniqueCategory.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
               </option>
             ))}
           </select>
@@ -152,12 +127,7 @@ const AlumniDirectory = () => {
             <thead className="sticky top-0 bg-n-7 w-full">
               <tr>
                 <th className="py-2 px-4 border-b-2 border-n-7">Name</th>
-                <th className="py-2 px-4 border-b-2 border-n-7">
-                  Year of Graduation
-                </th>
-                <th className="py-2 px-4 border-b-2 border-n-7">
-                  Contact Number
-                </th>
+                <th className="py-2 px-4 border-b-2 border-n-7">Category</th>
                 <th className="py-2 px-7 border-b-2 border-n-7">Fees</th>
                 <th className="py-2 px-7 border-b-2 border-n-7">Actions</th>
               </tr>
@@ -167,13 +137,12 @@ const AlumniDirectory = () => {
                 filteredAlumni.map((person) => (
                   <tr key={person.id} className="border-t border-gray-300">
                     <td className="py-3 px-4">{person.name}</td>
-                    <td className="py-3 px-4">{person.year}</td>
-                    <td className="py-3 px-4">{person.contact}</td>
+                    <td className="py-3 px-4">{person.category}</td>
                     <td className="py-3 px-4">{person.fees}</td>
                     <td className="py-3 px-4">
                       <button
                         href="#"
-                        // onClick={() => handleSelection(person.fees)}
+                        onClick={() => handleSelection(person)}
                         className="bg-n-6 text-white px-3 py-1 rounded hover:bg-green-600 "
                       >
                         Select
@@ -196,4 +165,4 @@ const AlumniDirectory = () => {
   );
 };
 
-export default AlumniDirectory;
+export default ScholarshipTable;
