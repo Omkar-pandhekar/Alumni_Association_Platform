@@ -104,12 +104,21 @@ const Header = () => {
             </Link>
           </>
         ) : (
-          <Button className="hidden lg:flex">
-            <button type="submit" onClick={handleLogout}>
-              {" "}
-              Log out{" "}
-            </button>
-          </Button>
+          <>
+            <div className="flex flex-wrap gap-5">
+              <Button className="hidden lg:flex">
+                <button type="submit" onClick={handleLogout}>
+                  {" "}
+                  Log out{" "}
+                </button>
+              </Button>
+              <Link to="/alumni">
+                <Button className="hidden lg:flex">
+                  <button type="submit"> Profile </button>
+                </Button>
+              </Link>
+            </div>
+          </>
         )}
 
         <Button

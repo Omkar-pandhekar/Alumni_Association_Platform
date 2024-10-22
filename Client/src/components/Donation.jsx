@@ -4,16 +4,10 @@ import Button from "./Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
-import ScholarshipTable from "./ScholarshipTable";
+
 import { useState } from "react";
 
 const Donation = () => {
-  const [selectedPerson, setSelectedPerson] = useState(null);
-
-  const handleFeesSelection = (person) => {
-    setSelectedPerson(person);
-  };
-
   const [phoneNumber, setPhoneNumber] = useState();
   const [item, setItem] = useState();
   const [quantity, setQuantity] = useState();
@@ -82,37 +76,7 @@ const Donation = () => {
       </div>
 
       {/* Second Form */}
-      <div className="relative z-1 max-w-[60rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
-        <div className="w-[30rem] max-lg:w-full h-full px-6 bg-n-8 border border-n-6 rounded-[2rem] lg:w-auto even:py-14 odd:py-8 odd:my-4 backdrop-blur-sm ">
-          <Heading
-            className="md:max-2-md lg:max-w-2xl"
-            title="Student's Fees Donation"
-          />
-          <form className="flex flex-col" action="post">
-            <input
-              placeholder="Phone Number"
-              className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
-              type="telephone"
-              name="PhoneNo"
-              required
-            />
-            <ScholarshipTable onFeesSelect={handleFeesSelection} />
 
-            {selectedPerson && (
-              <div className="mb-5">
-                <h3 className="text-lg font-semibold">
-                  Selected Student: {selectedPerson.name}
-                </h3>
-                <p>Category: {selectedPerson.category}</p>
-                <p>Fees: ${selectedPerson.fees}</p>
-              </div>
-            )}
-            <Button className="hidden lg:flex" href="#">
-              Pay
-            </Button>
-          </form>
-        </div>
-      </div>
       {/* </div> */}
     </Section>
   );

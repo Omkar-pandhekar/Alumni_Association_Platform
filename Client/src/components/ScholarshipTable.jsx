@@ -140,13 +140,12 @@ const ScholarshipTable = (props) => {
                     <td className="py-3 px-4">{person.category}</td>
                     <td className="py-3 px-4">{person.fees}</td>
                     <td className="py-3 px-4">
-                      <button
-                        href="#"
+                      <a
                         onClick={() => handleSelection(person)}
                         className="bg-n-6 text-white px-3 py-1 rounded hover:bg-green-600 "
                       >
                         Select
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 ))

@@ -15,6 +15,7 @@ import Donation from "./components/Donation";
 import Contact from "./components/Contact";
 import Alumni from "./pages/Alumni";
 import Student from "./pages/Student";
+import Fees from "./components/Fees";
 
 const Layout = () => {
   return (
@@ -57,6 +58,10 @@ const App = () => {
           element: <Student />,
         },
         {
+          path: "/fees",
+          element: <Fees />,
+        },
+        {
           path: "/profile",
           element: (
             // <ProtectedRoute>
@@ -96,14 +101,6 @@ const App = () => {
             // </ProtectedRoute>
           ),
         },
-        // {
-        //   path: "/student",
-        //   element: (
-        //     // <ProtectedRoute>
-        //     <StudentProfile />
-        //     // </ProtectedRoute>
-        //   ),
-        // },
         {
           path: "*",
           element: {},
