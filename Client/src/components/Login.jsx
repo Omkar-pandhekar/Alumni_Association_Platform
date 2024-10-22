@@ -24,6 +24,7 @@ const Login = () => {
         console.log(result);
         console.log(result.data);
         console.log(result.data.token);
+        console.log(result.data.token);
         console.log(result.data.message);
 
         if (result.data.token) {

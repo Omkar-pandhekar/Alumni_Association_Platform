@@ -1,7 +1,19 @@
 import { useState } from "react";
 import Section from "./Section";
+import axios from "axios";
 
-const Profile = () => {
+const Profile = () => { 
+  
+  // const [name,setName] = useState();
+  // const [email,setEmail] = useState();
+
+  // axios.get("http://localhost:3000/api/v1/user/profile").then(res => {
+  //   // console.log(res);
+  //   setName(res.name);
+  //   setEmail(res.email);
+  // })
+
+
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
   //Pass here the object of profileInfo after logging in

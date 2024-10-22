@@ -93,7 +93,7 @@ export const postRegister = async (req, res) => {
 export const postLogin = async (req, res) => {
   const { email, password, role } = req.body;
   console.log(email, password, role);
-
+  // Alumni
   if (role === "alumni") {
     const user = await Alumni.findOne({email}).select("+password");
     console.log(user);
@@ -102,7 +102,7 @@ export const postLogin = async (req, res) => {
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(400).json({ success: false });
+      return res.status(400).json({ success: false});
     }
     console.log("SuccessFully Login");
     // res.status(201).json('success');
@@ -125,7 +125,7 @@ export const postLogin = async (req, res) => {
       token: token,
     });
   }
-
+  // Student
    if (role === "student") {
     const user = await Student.findOne({ email }).select("+password");
     console.log(user);
@@ -205,3 +205,14 @@ export const getLogout = async (req, res) => {
 
   return res.json({ status: true, message: "Logout " });
 };
+
+export const getProfile = async (req,res) => {
+  
+  const userId = req.user._id;
+  console.log(userId);
+  const alumni = await Alumni.findById({userId});
+  console.log(alumni);
+  res.json({
+    message:"Entered in this route"
+  })
+}
