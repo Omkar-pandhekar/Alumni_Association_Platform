@@ -22,7 +22,7 @@ const Fees = () => {
     e.preventDefault();
     console.log(selectedPerson);
     axios
-      .post("http://localhost:3000/api/v1/donate/fees", {
+      .post("/api/v1/donate/fees", {
         studentName: selectedPerson.name,
         category: selectedPerson.category,
         fees: selectedPerson.fees,

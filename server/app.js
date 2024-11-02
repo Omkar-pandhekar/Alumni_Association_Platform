@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-
+import bodyparser from "body-parser";
 export const app = express();
 // import { User } from "./models/user.model.js";
 
@@ -15,6 +15,8 @@ dotenv.config({ path: "./.env" });
 
 // app.use(express.urlencoded({extended:true}));
 
+app.use(bodyparser.json({limit:'50mb'}));
+app.use(bodyparser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -23,6 +25,9 @@ app.use(
     credentials: true,
   })
 );
+
+
+
 // dotenv.config({ path: "./.env" });
 
 // app.use(express.json());
@@ -39,33 +44,3 @@ app.use("/api/v1/user/", userRouter);
 app.use("/api/v1/feedback/", feedbackRoutes);
 app.use("/api/v1/donate/", DonationRoutes);
 
-// app.post("/signup", async (req, res) => {
-//   console.log(req.body);
-//   const {
-//     lname,
-//     email,
-//     password,
-//     gender,
-//     role,
-//     yearOfAdmission,
-//     yearOfGraduation,
-//     field,
-//   } = req.body;
-
-//   await User.create({
-//     lname,
-//     email,
-//     password,
-//     gender,
-//     role,
-//     yearOfAdmission,
-//     yearOfGraduation,
-//     field,
-//   })
-//     .then((e) => res.json(e))
-//     .catch((err) => console.log(err));
-// });
-
-// app.listen(3000,()=>{
-//     console.log("Server is Started !");
-// })

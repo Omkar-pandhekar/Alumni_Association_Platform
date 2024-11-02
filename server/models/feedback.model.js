@@ -13,6 +13,6 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required:true
      }
-});
+},{timestamps:true});
 
  export const feed = mongoose.model('feedback',feedbackSchema);

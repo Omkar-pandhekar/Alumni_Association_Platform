@@ -10,7 +10,7 @@ const alumniSchema = new mongoose.Schema({
     yearOfAdmission:Number,
     yearOfGraduation:Number,
     field:String
-});
+},{timestamps:true});
 
 
 

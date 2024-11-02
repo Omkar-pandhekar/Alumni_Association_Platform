@@ -12,16 +12,24 @@ const Header = () => {
   // const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user,setUser] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
+    const user = localStorage.getItem("authUser");
     if (token) {
       setIsLoggedIn(true);
-      // isLoggedIn = true;
+
+      if(user=='alumni')  setUser('/alumni');
+      if(user=="student") setUser('/student');
+      if(user==='admin') setUser('/adminprofile');
+
     }
   }, []);
 
+  
+console.log(user);
   const toggleNavigation = () => {
     if (openNavigation) {
       setOpenNavigation(false);
@@ -35,11 +43,12 @@ const Header = () => {
   const handleLogout = () => {
     // Add your logout logic here
     axios
-      .get("http://localhost:3000/api/v1/user/logout")
+      .get("/api/v1/user/logout")
       .then((res) => {
         if (res.data.status) {
           console.log(localStorage.getItem("authToken"));
           localStorage.removeItem("authToken");
+          localStorage.removeItem("authUser");
           console.log(localStorage.getItem("authToken"));
           setIsLoggedIn(false);
           navigate("/login");
@@ -112,7 +121,7 @@ const Header = () => {
                   Log out{" "}
                 </button>
               </Button>
-              <Link to="/alumni">
+              <Link to={ `${user}`} >
                 <Button className="hidden lg:flex">
                   <button type="submit"> Profile </button>
                 </Button>

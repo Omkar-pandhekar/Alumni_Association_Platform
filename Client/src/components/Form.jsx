@@ -30,7 +30,7 @@ const Form = () => {
     const yearOfGraduationNumber = parseInt(yearOfGraduation);
 
     axios
-      .post("http://localhost:3000/api/v1/user/signup", {
+      .post("/api/v1/user/signup", {
         fname,
         lname,
         email,

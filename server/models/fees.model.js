@@ -5,6 +5,6 @@ const FeesSchema = new mongoose.Schema({
   category:String,
   fees:Number,
   phoneNumber: String,
-});
+},{timestamps:true});
 
 export const Fee = mongoose.model("FeeDB", FeesSchema);

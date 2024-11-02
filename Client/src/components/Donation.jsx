@@ -16,7 +16,7 @@ const Donation = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/v1/donate/donation", {
+      .post("/api/v1/donate/donation", {
         phoneNumber,
         item,
         quantity,

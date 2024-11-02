@@ -6,7 +6,7 @@ const adminSchema = new mongoose.Schema({
     email:String,
     password:String,
     gender:String,
-});
+},{timestamps:true});
 
 
 

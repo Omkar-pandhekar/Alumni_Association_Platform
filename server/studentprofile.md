@@ -1,41 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 import Section from "./Section";
+import AlumniFeatures from "./AlumniFeatures";
 import axios from "axios";
 
 const Profile = () => {
-  useEffect(() => {
-    axios.get("/api/v1/user/profile").then((res) => {
+  let getmail ='';
+  useEffect(()=>{
+
+    axios.get("/api/v1/user/profile").then(res => {
       console.log(res);
-      console.log((res.data).length);
+      console.log(res.data);
       console.log(res.data.email);
-
+      console.log(res.data.fname+" "+res.data.lname);
       setProfileInfo((prev) => ({
-        
-        name: res.data.name,
-        bio:res.data.bio,
-        location:res.data.location,
-        email: res.data.email,
-        phone:res.data.phone,
-        skills:res.data.skills,
-        profilePhoto:res.data.profilePhoto,
-        backgroundImage:res.data.backgroundImage
+        ...prev,
+        email:res.data.email,
+        name: res.data.fname+" "+res.data.lname,
+      }))
+    })
 
-      }));
-    });
-  }, []);
+  },[]);
+
+
 
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
-  //Pass here the object of profileInfo after logging in
   const [profileInfo, setProfileInfo] = useState({
     name: "Rajat Ranvir",
-    bio: "Add bio",
+    bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
     location: "San Francisco, CA",
     email: "rajatranvir@gmail.com",
+    // email:getmail,
     phone: "+1 234 567 890",
     skills: ["React", "Node.js", "JavaScript", "Tailwind CSS", "MongoDB"],
-    profilePhoto: "", // Default profile photo
-    backgroundImage: "", // Default background image
+    profilePhoto: "https://via.placeholder.com/150", // Default profile photo
+    backgroundImage: "https://via.placeholder.com/800x200", // Default background image
   });
 
   const [posts, setPosts] = useState([
@@ -68,7 +67,7 @@ const Profile = () => {
     // console.log(formData);
     if(editing){
       axios
-        .post("/api/v1/user/setprofile",formData,{
+        .post("/api/v1/user/setprofilestudent",formData,{
           headers: {
             "content-Type": "multipart/form-data",
           },
@@ -112,8 +111,8 @@ const Profile = () => {
   //   }
   // };
 
-  
-  // New Functions for the profile and Background image 
+
+   // New Functions for the profile and Background image 
   // Handle profile photo change 
 const handleProfilePhotoChange = (e) => {
   const file = e.target.files[0];
@@ -129,6 +128,8 @@ const handleBackgroundImageChange = (e) => {
     setProfileInfo({ ...profileInfo, backgroundImage: file });
   }
 };
+
+
 
 
   // Add new skill
@@ -152,7 +153,7 @@ const handleBackgroundImageChange = (e) => {
 
   return (
     <Section>
-      <div className="max-w-[100rem] mx-auto mb-10 p-6 ">
+      <div className="max-w-[100rem] mx-auto mt-8 mb-10 p-6 ">
         {/* Background Image */}
         <div
           className="h-48 w-full bg-cover bg-center rounded-t-lg relative"
@@ -332,6 +333,7 @@ const handleBackgroundImageChange = (e) => {
           </div>
         </div>
       </div>
+      <AlumniFeatures />
     </Section>
   );
 };

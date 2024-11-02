@@ -14,7 +14,7 @@ const Contact = () => {
   const HandleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/api/v1/feedback/contact", {
+      .post("/api/v1/feedback/contact", {
         fullname,
         email,
         feedback,

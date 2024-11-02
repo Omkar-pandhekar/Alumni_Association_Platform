@@ -15,7 +15,7 @@ const Login = () => {
   const HandleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/api/v1/user/login", {
+      .post("/api/v1/user/login", {
         email,
         password,
         role,
@@ -29,6 +29,8 @@ const Login = () => {
 
         if (result.data.token) {
           localStorage.setItem("authToken", result.data.token);
+          localStorage.setItem("authUser",result.data.message);
+          
         }
         if (result.data.status && result.data.message === "admin") {
           navigate("/adminprofile");
