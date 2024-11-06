@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const connectDB = () => {
-    mongoose.connect(process.env.DATABASE_URL,{
-        dbName:'Alumni'
+  mongoose
+    .connect(process.env.DATABASE_URL, {
+      dbName: "Alumni",
     })
-    .then(()=>{
-        console.log("Database Connected Successfully ");
+    .then(() => {
+      console.log("Database Connected Successfully ");
     })
-    .catch(err => console.log(err));
-}
-
+    .catch((err) => console.log(err));
+};

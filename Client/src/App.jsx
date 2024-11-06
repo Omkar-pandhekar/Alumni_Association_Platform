@@ -16,6 +16,7 @@ import Contact from "./components/Contact";
 import Alumni from "./pages/Alumni";
 import Student from "./pages/Student";
 import Fees from "./components/Fees";
+import JobPosting from "./components/JobPosting";
 
 const Layout = () => {
   return (
@@ -108,6 +109,10 @@ const App = () => {
         {
           path: "/student",
           element: <Student />,
+        },
+        {
+          path: "/jobposting",
+          element: <JobPosting />,
         },
       ],
     },

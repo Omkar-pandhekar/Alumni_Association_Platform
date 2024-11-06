@@ -10,6 +10,26 @@ import { upload } from "../middlewares/multer.middleware.js";
 import { studentProfile } from "../models/studentProfile.model.js";
 
 // import {sendCookie}  from "../utils/cookieparse.util.js";
+
+const addDetailesInProfile = async (email) => {
+  try {
+    console.log("inside addDetails", email);
+    AlumniProfile.create({
+      email,
+      bio: "Add bio",
+      location: "Add location",
+      phone: "Add Phone Number",
+      skills: [],
+      profilePhoto: "",
+      backgroundImage: "",
+    })
+      .then((e) => res.json(e))
+      .catch((err) => console.log(err));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const postRegister = async (req, res) => {
   console.log(req.body);
   const {
@@ -39,7 +59,8 @@ export const postRegister = async (req, res) => {
       yearOfAdmission,
       yearOfGraduation,
       field,
-    })
+    });
+    await addDetailesInProfile(email)
       .then((e) => res.json(e))
       .catch((err) => console.log(err));
   }
@@ -102,7 +123,7 @@ export const postLogin = async (req, res) => {
   userMode = role;
   // Alumni
   if (role === "alumni") {
-    const user = await Alumni.findOne({email}).select("+password");
+    const user = await Alumni.findOne({ email }).select("+password");
     console.log(user);
 
     if (!user) {
@@ -110,16 +131,14 @@ export const postLogin = async (req, res) => {
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(400).json({ success: false});
+      return res.status(400).json({ success: false });
     }
     console.log("SuccessFully Login");
     // res.status(201).json('success');
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id ,
-        role,
-      },
+      { _id: user._id, role },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -131,12 +150,12 @@ export const postLogin = async (req, res) => {
 
     return res.json({
       status: true,
-      message: 'alumni',
+      message: "alumni",
       token: token,
     });
   }
   // Student
-   if (role === "student") {
+  if (role === "student") {
     const user = await Student.findOne({ email }).select("+password");
     console.log(user);
     if (!user) {
@@ -151,9 +170,7 @@ export const postLogin = async (req, res) => {
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id ,
-        role,
-      },
+      { _id: user._id, role },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -165,13 +182,12 @@ export const postLogin = async (req, res) => {
 
     return res.json({
       status: true,
-      message: 'student',
+      message: "student",
       token: token,
     });
-
   }
 
-  // Admin 
+  // Admin
   if (role === "admin") {
     const user = await Admin.findOne({ email }).select("+password");
     console.log(user);
@@ -187,9 +203,7 @@ export const postLogin = async (req, res) => {
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id ,
-        role,
-      },
+      { _id: user._id, role },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -201,12 +215,10 @@ export const postLogin = async (req, res) => {
 
     return res.json({
       status: true,
-      message:'admin',
+      message: "admin",
       token: token,
     });
-
   }
-
 };
 
 export const getLogout = async (req, res) => {
@@ -219,8 +231,8 @@ export const getLogout = async (req, res) => {
   return res.json({ status: true, message: "Logout " });
 };
 
-export const getProfile = async (req,res) => {
-  console.log("In the get Profile Function ")
+export const getProfile = async (req, res) => {
+  console.log("In the get Profile Function ");
   const userId = req.user._id;
   const email = req.user.email;
   console.log(email);
@@ -228,44 +240,42 @@ export const getProfile = async (req,res) => {
   console.log(userId);
   console.log(loginUser);
   // console.log(userMode);
-   if(loginUser==='alumni'){
-     const alumni = await Alumni.findById(userId);
-     const alumniProfile = await AlumniProfile.findOne({email});
-     console.log(alumniProfile);
+  if (loginUser === "alumni") {
+    const alumni = await Alumni.findById(userId);
+    console.log("Finding alumni", alumni);
+    const alumniProfile = await AlumniProfile.findOne({ email });
+    console.log("This is alumni details", alumniProfile);
     //  console.log(alumniProfile.skills[0][0]);
-    const skillArray =  JSON.parse(alumniProfile.skills[0]);  
-     if(alumniProfile) {
-        const sendData = {
-          name:alumni.fname +" "+alumni.lname,
-          bio: alumniProfile.bio,
-          location: alumniProfile.location,
-          email: email,
-          phone:alumniProfile.phone,
-          skills:skillArray,
-          profilePhoto:alumniProfile.profilePhoto,
-          backgroundImage:alumniProfile.backgroundImage,
-        };
-        console.log("SendData Object",sendData);
-        res.send(sendData);
-     }
-
-     else {
-       console.log("Alumni Object ",alumni);
-       res.send(alumni);
-     }
-   }
-   else if (loginUser ==='student'){
+    const skillArray = alumniProfile.skills[0];
+    if (alumniProfile) {
+      const sendData = {
+        name: alumni.fname + " " + alumni.lname,
+        bio: alumniProfile.bio,
+        location: alumniProfile.location,
+        email: email,
+        phone: alumniProfile.phone,
+        skills: skillArray,
+        profilePhoto: alumniProfile.profilePhoto,
+        backgroundImage: alumniProfile.backgroundImage,
+      };
+      console.log("SendData Object", sendData);
+      res.send(sendData);
+    } else {
+      console.log("Alumni Object ", alumni);
+      res.send(alumni);
+    }
+  } else if (loginUser === "student") {
     const student = await Student.findById(userId);
-      const studentprofile = await studentProfile.findOne({email});
-      console.log(studentprofile);
-      res.send(student);
-   }
+    const studentprofile = await studentProfile.findOne({ email });
+    console.log(studentprofile);
+    res.send(student);
+  }
   //  else if(loginUser==='student'){
   //   const student = await Student.findById(userId);
   //   const studentprofile = await studentProfile.findOne({email});
   //   console.log(studentprofile);
   //   if(studentprofile) {
-  //     // const skillArray =  JSON.parse(studentprofile.skills[0]);  
+  //     // const skillArray =  JSON.parse(studentprofile.skills[0]);
 
   //     let skillArray;
   //     try {
@@ -296,20 +306,20 @@ export const getProfile = async (req,res) => {
   //   }
   //   else {
   //     console.log("Student Object  from false ",student);
-      
+
   //     const sendData = {
   //       // isChanged:false,
   //       name:student.fname +" "+student.lname,
   //       email: email
-        
+
   //     }
   //     console.log(sendData);
   //     res.send(sendData);
   //   }
   // }
-}
+};
 
-export const postSetProfile = async (req,res) => {
+export const postSetProfile = async (req, res) => {
   // const {formData,editing,profileInfo} = req.body;
   const userId = req.user._id;
   const loginUser = req.role;
@@ -317,57 +327,64 @@ export const postSetProfile = async (req,res) => {
   console.log(loginUser);
   const email = req.user.email;
   console.log(email);
-  const UserFind = await AlumniProfile.find({email});
-  const { name, bio, location, phone, skills} = req.body;  
+  const UserFind = await AlumniProfile.find({ email });
+  const { name, bio, location, phone, skills } = req.body;
   console.log(name, bio, location, phone, skills);
 
   // console.log(req.body);
-    // console.log(name,email);
-    // console.log(editing);
-    // console.log(req.files);
-    // console.log(req.files['profilePhoto'][0]);
-    // upload.fields([{ name: "profilePhoto",maxCount:1}, { name: "backgroundImage" ,maxCount:1}]);
-    let profilePhotoUrl = UserFind ? UserFind.profilePhoto:"";
-    let backgroundImageUrl = UserFind ? UserFind.backgroundImage:"";
-    if(req.files && req.files['profilePhoto'] && req.files['profilePhoto'][0]){
-      console.log(req.files['profilePhoto'][0].path);
-       const profilePhoto = await uploadOnCloudinary(req.files['profilePhoto'][0].path,'Alumni_Association/AlumniProfile/ProfilePhoto');
-      console.log(profilePhoto);
-      console.log(profilePhoto.secure_url);
-      profilePhotoUrl = profilePhoto.secure_url;
-    }
-    if(req.files && req.files['backgroundImage'] && req.files['backgroundImage'][0]){
-      const backgroundImage = await uploadOnCloudinary(req.files['backgroundImage'][0].path,'Alumni_Association/AlumniProfile/backgroundImage');
-      console.log(backgroundImage);
-      console.log(backgroundImage.secure_url);
-      backgroundImageUrl = backgroundImage.secure_url;
-    }
-    console.log(name, bio, location, email, phone, skills);
-  const receivedData= {
+  // console.log(name,email);
+  // console.log(editing);
+  // console.log(req.files);
+  // console.log(req.files['profilePhoto'][0]);
+  // upload.fields([{ name: "profilePhoto",maxCount:1}, { name: "backgroundImage" ,maxCount:1}]);
+  let profilePhotoUrl = UserFind ? UserFind.profilePhoto : "";
+  let backgroundImageUrl = UserFind ? UserFind.backgroundImage : "";
+  if (req.files && req.files["profilePhoto"] && req.files["profilePhoto"][0]) {
+    console.log(req.files["profilePhoto"][0].path);
+    const profilePhoto = await uploadOnCloudinary(
+      req.files["profilePhoto"][0].path,
+      "Alumni_Association/AlumniProfile/ProfilePhoto"
+    );
+    console.log(profilePhoto);
+    console.log(profilePhoto.secure_url);
+    profilePhotoUrl = profilePhoto.secure_url;
+  }
+  if (
+    req.files &&
+    req.files["backgroundImage"] &&
+    req.files["backgroundImage"][0]
+  ) {
+    const backgroundImage = await uploadOnCloudinary(
+      req.files["backgroundImage"][0].path,
+      "Alumni_Association/AlumniProfile/backgroundImage"
+    );
+    console.log(backgroundImage);
+    console.log(backgroundImage.secure_url);
+    backgroundImageUrl = backgroundImage.secure_url;
+  }
+  console.log(name, bio, location, email, phone, skills);
+  const receivedData = {
     email,
     bio,
     location,
     phone,
     skills,
-    profilePhoto :profilePhotoUrl,
-    backgroundImage:backgroundImageUrl,
-  }
-  if(UserFind) {
+    profilePhoto: profilePhotoUrl,
+    backgroundImage: backgroundImageUrl,
+  };
+  if (UserFind) {
     await AlumniProfile.updateOne(
-      {email},
-      {$set:receivedData},
-      {upsert:false},
-    )
-  }
-  else {
+      { email },
+      { $set: receivedData },
+      { upsert: false }
+    );
+  } else {
     await AlumniProfile.create(receivedData);
-
   }
-     // console.log(formData);  
+  // console.log(formData);
+};
 
-}
-
-export const postSetProfileStudent = async (req,res) => {
+export const postSetProfileStudent = async (req, res) => {
   // const {formData,editing,profileInfo} = req.body;
   const userId = req.user._id;
   const loginUser = req.role;
@@ -375,57 +392,61 @@ export const postSetProfileStudent = async (req,res) => {
   console.log(loginUser);
   const email = req.user.email;
   console.log(email);
-  const UserFind = await studentProfile.find({email});
+  const UserFind = await studentProfile.find({ email });
 
   // console.log(req.body);
-  const { name, bio, location, phone, skills} = req.body;  
+  const { name, bio, location, phone, skills } = req.body;
   console.log(name, bio, location, phone, skills);
 
-  
   // console.log(req.body);
-    // console.log(name,email);
-    // console.log(editing);
-    // console.log(req.files);
-    // console.log(req.files['profilePhoto'][0]);
-    // upload.fields([{ name: "profilePhoto",maxCount:1}, { name: "backgroundImage" ,maxCount:1}]);
-    let profilePhotoUrl = UserFind ? UserFind.profilePhoto:"";
-    let backgroundImageUrl = UserFind ? UserFind.backgroundImage:"";
-    if(req.files && req.files['profilePhoto'] && req.files['profilePhoto'][0]) {
-
-      console.log(req.files['profilePhoto'][0].path);
-       const profilePhoto = await uploadOnCloudinary(req.files['profilePhoto'][0].path,'Alumni_Association/StudentProfile/ProfilePhoto');
-      console.log(profilePhoto);
-      console.log(profilePhoto.secure_url);
-      profilePhotoUrl = profilePhoto.secure_url;
-    }
-    if(req.files && req.files['backgroundImage'] && req.files['backgroundImage'][0]) {
-      
-      const backgroundImage = await uploadOnCloudinary(req.files['backgroundImage'][0].path,'Alumni_Association/StudentProfile/backgroundImage');
-      console.log(backgroundImage);
-      console.log(backgroundImage.secure_url);
-      backgroundImageUrl = backgroundImage.secure_url;
-    }
-    console.log(name, bio, location, email, phone, skills);
-  const receivedData= {
+  // console.log(name,email);
+  // console.log(editing);
+  // console.log(req.files);
+  // console.log(req.files['profilePhoto'][0]);
+  // upload.fields([{ name: "profilePhoto",maxCount:1}, { name: "backgroundImage" ,maxCount:1}]);
+  let profilePhotoUrl = UserFind ? UserFind.profilePhoto : "";
+  let backgroundImageUrl = UserFind ? UserFind.backgroundImage : "";
+  if (req.files && req.files["profilePhoto"] && req.files["profilePhoto"][0]) {
+    console.log(req.files["profilePhoto"][0].path);
+    const profilePhoto = await uploadOnCloudinary(
+      req.files["profilePhoto"][0].path,
+      "Alumni_Association/StudentProfile/ProfilePhoto"
+    );
+    console.log(profilePhoto);
+    console.log(profilePhoto.secure_url);
+    profilePhotoUrl = profilePhoto.secure_url;
+  }
+  if (
+    req.files &&
+    req.files["backgroundImage"] &&
+    req.files["backgroundImage"][0]
+  ) {
+    const backgroundImage = await uploadOnCloudinary(
+      req.files["backgroundImage"][0].path,
+      "Alumni_Association/StudentProfile/backgroundImage"
+    );
+    console.log(backgroundImage);
+    console.log(backgroundImage.secure_url);
+    backgroundImageUrl = backgroundImage.secure_url;
+  }
+  console.log(name, bio, location, email, phone, skills);
+  const receivedData = {
     email,
     bio,
     location,
     phone,
     skills,
-    profilePhoto :profilePhotoUrl,
-    backgroundImage:backgroundImageUrl,
-  }
-  if(UserFind) {
+    profilePhoto: profilePhotoUrl,
+    backgroundImage: backgroundImageUrl,
+  };
+  if (UserFind) {
     await studentProfile.updateOne(
-      {email},
-      {$set:receivedData},
-      {upsert:false},
-    )
-  }
-  else {
+      { email },
+      { $set: receivedData },
+      { upsert: false }
+    );
+  } else {
     await AlumniProfile.create(receivedData);
-
   }
-    //  console.log(formData);  
-
-}
+  //  console.log(formData);
+};

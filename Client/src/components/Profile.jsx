@@ -3,40 +3,10 @@ import Section from "./Section";
 import axios from "axios";
 
 const Profile = () => {
-  useEffect(() => {
-    axios.get("/api/v1/user/profile").then((res) => {
-      console.log(res);
-      console.log((res.data).length);
-      console.log(res.data.email);
-
-      setProfileInfo((prev) => ({
-        
-        name: res.data.name,
-        bio:res.data.bio,
-        location:res.data.location,
-        email: res.data.email,
-        phone:res.data.phone,
-        skills:res.data.skills,
-        profilePhoto:res.data.profilePhoto,
-        backgroundImage:res.data.backgroundImage
-
-      }));
-    });
-  }, []);
-
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
   //Pass here the object of profileInfo after logging in
-  const [profileInfo, setProfileInfo] = useState({
-    name: "Rajat Ranvir",
-    bio: "Add bio",
-    location: "San Francisco, CA",
-    email: "rajatranvir@gmail.com",
-    phone: "+1 234 567 890",
-    skills: ["React", "Node.js", "JavaScript", "Tailwind CSS", "MongoDB"],
-    profilePhoto: "", // Default profile photo
-    backgroundImage: "", // Default background image
-  });
+  const [profileInfo, setProfileInfo] = useState([]);
 
   const [posts, setPosts] = useState([
     { id: 1, content: "Excited to start working on a new full-stack project!" },
@@ -50,12 +20,71 @@ const Profile = () => {
     { id: 3, name: "Clara Lee", relation: "Friend" },
   ]);
 
+  // useEffect(() => {
+  //   axios.get("/api/v1/user/profile").then((res) => {
+  //     console.log(res);
+  //     console.log(res.data.length);
+  //     console.log(res.data.email);
+
+  //     setProfileInfo({
+  //       name: res.data.name,
+  //       bio: res.data.bio,
+  //       location: res.data.location,
+  //       email: res.data.email,
+  //       phone: res.data.phone,
+  //       skills: res.data.skills,
+  //       profilePhoto: res.data.profilePhoto,
+  //       backgroundImage: res.data.backgroundImage,
+  //     });
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const getUserProfileData = async () => {
+      try {
+        const response = await axios.get("/api/v1/user/profile");
+        var profileData;
+        console.log(response);
+        if (response) {
+          profileData = await response.data;
+          console.log("response data:", profileData);
+        }
+
+        if (!profileData.error) {
+          setProfileInfo(profileData);
+        } else {
+          setProfileInfo({
+            name: "Rajat Ranvir",
+            bio: "Add bio",
+            location: "San Francisco, CA",
+            email: "rajatranvir@gmail.com",
+            phone: "+1 234 567 890",
+            skills: [
+              "React",
+              "Node.js",
+              "JavaScript",
+              "Tailwind CSS",
+              "MongoDB",
+            ],
+            profilePhoto: "", // Default profile photo
+            backgroundImage: "", // Default background image
+          });
+        }
+      } catch (error) {
+        return console.log(error);
+      }
+    };
+    getUserProfileData();
+    console.log(profileInfo);
+  }, []);
+
   // Toggle editing mode
   const handleEditToggle = (e) => {
     e.preventDefault();
     setEditing(!editing);
     const formData = new FormData();
     // console.log(profileInfo.profilePhoto);
+    console.log("inside handle toggle", profileInfo.skills);
     formData.append("profilePhoto", profileInfo.profilePhoto);
     formData.append("backgroundImage", profileInfo.backgroundImage);
     formData.append("name", profileInfo.name);
@@ -63,12 +92,12 @@ const Profile = () => {
     formData.append("location", profileInfo.location);
     formData.append("email", profileInfo.email);
     formData.append("phone", profileInfo.phone);
-    formData.append("skills", JSON.stringify(profileInfo.skills));
+    formData.append("skills", profileInfo.skills);
     formData.append("editing", !editing);
     // console.log(formData);
-    if(editing){
+    if (editing) {
       axios
-        .post("/api/v1/user/setprofile",formData,{
+        .post("/api/v1/user/setprofile", formData, {
           headers: {
             "content-Type": "multipart/form-data",
           },
@@ -112,24 +141,22 @@ const Profile = () => {
   //   }
   // };
 
-  
-  // New Functions for the profile and Background image 
-  // Handle profile photo change 
-const handleProfilePhotoChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setProfileInfo({ ...profileInfo, profilePhoto: file });
-  }
-};
+  // New Functions for the profile and Background image
+  // Handle profile photo change
+  const handleProfilePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileInfo({ ...profileInfo, profilePhoto: file });
+    }
+  };
 
-// Handle background image change
-const handleBackgroundImageChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setProfileInfo({ ...profileInfo, backgroundImage: file });
-  }
-};
-
+  // Handle background image change
+  const handleBackgroundImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileInfo({ ...profileInfo, backgroundImage: file });
+    }
+  };
 
   // Add new skill
   const handleAddSkill = () => {
@@ -156,7 +183,11 @@ const handleBackgroundImageChange = (e) => {
         {/* Background Image */}
         <div
           className="h-48 w-full bg-cover bg-center rounded-t-lg relative"
-          style={{ backgroundImage: `url(${profileInfo.backgroundImage})` }}
+          style={{
+            backgroundImage: profileInfo?.backgroundImage
+              ? `url(${profileInfo.backgroundImage})`
+              : `url("https://cdn.shopify.com/s/files/1/0066/4574/3686/files/Abstract_LinkedIn_Background.png?v=1627912075")`,
+          }}
         >
           {editing && (
             <input
@@ -173,7 +204,11 @@ const handleBackgroundImageChange = (e) => {
           {/* Profile Photo */}
           <div className="relative">
             <img
-              src={profileInfo.profilePhoto}
+              src={
+                profileInfo?.profilePhoto
+                  ? `${profileInfo?.profilePhoto}`
+                  : "https://thumbs.dreamstime.com/b/profile-pic-icon-isolated-white-background-your-web-mobile-app-design-133862807.jpg"
+              }
               alt="Profile"
               className="w-32 h-32 rounded-full object-cover shadow-md border-4 border-white"
             />
@@ -266,21 +301,22 @@ const handleBackgroundImageChange = (e) => {
         <div className="mt-6">
           <h2 className="text-2xl font-semibold text-n-1 mb-4">Skills</h2>
           <div className="flex flex-wrap gap-2">
-            {profileInfo.skills.map((skill, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <span className="px-3 py-1 bg-blue-500 text-white rounded-full">
-                  {skill}
-                </span>
-                {editing && (
-                  <button
-                    onClick={() => handleRemoveSkill(index)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
+            {Array.isArray(profileInfo.skills) &&
+              profileInfo?.skills.map((skill, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <span className="px-3 py-1 bg-blue-500 text-white rounded-full">
+                    {skill}
+                  </span>
+                  {editing && (
+                    <button
+                      onClick={() => handleRemoveSkill(index)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
           </div>
 
           {editing && (

@@ -152,12 +152,13 @@ export const AlumniFeatures = [
   },
   {
     id: "3",
-    title: "Discover Alumni Success Stories",
-    text: "Read about fellow alumni's achievements and let their stories motivate your journey.",
+    title: "Post a Job Opportunity for Alumni and Students",
+    text: "Share job opportunities with the alumni and student community. ",
     backgroundUrl: "./src/assets/benefits/card-4.svg",
     iconUrl: benefitIcon4,
     imageUrl: success,
     light: true,
+    linkUrl: "/jobposting",
   },
   {
     id: "4",
