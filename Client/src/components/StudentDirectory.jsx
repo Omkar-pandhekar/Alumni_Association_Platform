@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import Section from "./Section";
 import Heading from "./Heading";
+import Section from "./Section";
 
-const AlumniDirectory = () => {
-  const [alumniDetails, setAlumniDetails] = useState([]);
-  const [filteredAlumni, setFilteredAlumni] = useState([]);
+const StudentDirectory = () => {
+  const [studentDetails, setStudentDetails] = useState([]);
+  const [filteredStudent, setFilteredStudent] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedField, setSelectedField] = useState("");
 
   useEffect(() => {
     const getBlogsData = async () => {
-      const response = await fetch(`/api/v1/alumni/alumnidetails`, {
+      const response = await fetch(`/api/v1/student/studentdetails`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -21,30 +21,30 @@ const AlumniDirectory = () => {
         var data = await response.json();
       }
       console.log(data[0]);
-      setAlumniDetails(data);
+      setStudentDetails(data);
     };
 
     getBlogsData();
-    console.log("jopost data", alumniDetails);
+    console.log("jopost data", studentDetails);
   }, []);
 
   useEffect(() => {
     // Filter alumni based on search query and selected field
-    const filtered = alumniDetails.filter((alumni) => {
-      const fullName = `${alumni.fname} ${alumni.lname}`.toLowerCase();
+    const filtered = studentDetails.filter((student) => {
+      const fullName = `${student.fname} ${student.lname}`.toLowerCase();
       const matchesSearch = fullName.includes(searchQuery.toLowerCase());
       const matchesField = selectedField
-        ? alumni.field === selectedField
+        ? student.field === selectedField
         : true;
       return matchesSearch && matchesField;
     });
 
-    setFilteredAlumni(filtered);
-  }, [searchQuery, selectedField, alumniDetails]);
+    setFilteredStudent(filtered);
+  }, [searchQuery, selectedField, studentDetails]);
 
   return (
     <Section>
-      <Heading className="md:max-w-md lg:max-w-4xl" title="Alumni Directory" />
+      <Heading className="md:max-w-md lg:max-w-4xl" title="Student Directory" />
 
       <div className="relative z-1 max-w-[90rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
         <div className=" px-8 bg-n-8 border border-n-6 rounded-[2rem] lg:w-90 even:py-14 odd:py-8 odd:my-4 lg:backdrop-blur-sm overflow-y-auto max-h-144">
@@ -95,8 +95,8 @@ const AlumniDirectory = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredAlumni.length > 0 ? (
-                  filteredAlumni.map((person) => (
+                {filteredStudent.length > 0 ? (
+                  filteredStudent.map((person) => (
                     <tr key={person.id} className="border-t border-gray-300">
                       <td className="py-3 px-4">
                         {person.fname + " " + person.lname}
@@ -123,4 +123,4 @@ const AlumniDirectory = () => {
   );
 };
 
-export default AlumniDirectory;
+export default StudentDirectory;

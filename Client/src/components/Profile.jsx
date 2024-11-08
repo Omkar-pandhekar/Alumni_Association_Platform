@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import Section from "./Section";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
-  const [newSkill, setNewSkill] = useState(""); // State for adding new skill
+  const [newSkill, setNewSkill] = useState([]); // State for adding new skill
   //Pass here the object of profileInfo after logging in
   const [profileInfo, setProfileInfo] = useState([]);
 
@@ -40,18 +41,28 @@ const Profile = () => {
   // }, []);
 
   useEffect(() => {
+    var token = localStorage.getItem("authToken");
+    const decoded = jwtDecode(token);
+    console.log("Here", decoded);
+    const { email, role } = decoded;
     const getUserProfileData = async () => {
       try {
-        const response = await axios.get("/api/v1/user/profile");
+        console.log(email, "and", role);
+        const response = await axios.get(
+          `/api/v1/user/userprofile?email=${decoded.email}&role=${decoded.role}`
+        );
         var profileData;
         console.log(response);
         if (response) {
-          profileData = await response.data;
+          profileData = await response.data[0];
           console.log("response data:", profileData);
         }
 
         if (!profileData.error) {
-          setProfileInfo(profileData);
+          setProfileInfo({
+            name: decoded.fullName,
+            ...profileData,
+          });
         } else {
           setProfileInfo({
             name: "Rajat Ranvir",
@@ -265,27 +276,23 @@ const Profile = () => {
                   name="email"
                   value={profileInfo.email}
                   onChange={handleProfileChange}
-                  className="text-gray-700 font-medium"
+                  className="text-n-2 font-medium"
                 />
                 <input
                   type="text"
                   name="phone"
                   value={profileInfo.phone}
                   onChange={handleProfileChange}
-                  className="text-gray-700 font-medium"
+                  className="text-n-2 font-medium"
                 />
               </>
             ) : (
               <>
-                <p className="text-gray-700 font-medium">
+                <p className="text-n-2 font-medium">
                   📍 {profileInfo.location}
                 </p>
-                <p className="text-gray-700 font-medium">
-                  📧 {profileInfo.email}
-                </p>
-                <p className="text-gray-700 font-medium">
-                  📞 {profileInfo.phone}
-                </p>
+                <p className="text-n-2 font-medium">📧 {profileInfo.email}</p>
+                <p className="text-n-2 font-medium">📞 {profileInfo.phone}</p>
               </>
             )}
           </div>

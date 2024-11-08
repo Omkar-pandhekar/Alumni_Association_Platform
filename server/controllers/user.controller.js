@@ -11,9 +11,9 @@ import { studentProfile } from "../models/studentProfile.model.js";
 
 // import {sendCookie}  from "../utils/cookieparse.util.js";
 
-const addDetailesInProfile = async (email) => {
+const addDetailesInProfile = async (email, role) => {
   try {
-    console.log("inside addDetails", email);
+    console.log("inside addDetails", email, role);
     AlumniProfile.create({
       email,
       bio: "Add bio",
@@ -22,6 +22,7 @@ const addDetailesInProfile = async (email) => {
       skills: [],
       profilePhoto: "",
       backgroundImage: "",
+      role,
     })
       .then((e) => res.json(e))
       .catch((err) => console.log(err));
@@ -60,7 +61,7 @@ export const postRegister = async (req, res) => {
       yearOfGraduation,
       field,
     });
-    await addDetailesInProfile(email)
+    await addDetailesInProfile(email, role)
       .then((e) => res.json(e))
       .catch((err) => console.log(err));
   }
@@ -78,7 +79,8 @@ export const postRegister = async (req, res) => {
       yearOfAdmission,
       yearOfGraduation,
       field,
-    })
+    });
+    await addDetailesInProfile(email, role)
       .then((e) => res.json(e))
       .catch((err) => console.log(err));
   }
@@ -138,7 +140,12 @@ export const postLogin = async (req, res) => {
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id, role },
+      {
+        _id: user._id,
+        role: role,
+        email: email,
+        fullName: user.fname + " " + user.lname,
+      },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -170,7 +177,12 @@ export const postLogin = async (req, res) => {
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id, role },
+      {
+        _id: user._id,
+        role: role,
+        email: email,
+        fullName: user.fname + " " + user.lname,
+      },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -203,7 +215,12 @@ export const postLogin = async (req, res) => {
     // sendCookie(user,res);
 
     const token = jwt.sign(
-      { _id: user._id, role },
+      {
+        _id: user._id,
+        role: role,
+        email: email,
+        fullName: user.fname + " " + user.lname,
+      },
       process.env.JWT_SECRET, // process.env.KEY,
       { expiresIn: "1h" }
     );
@@ -318,6 +335,15 @@ export const getProfile = async (req, res) => {
   //   }
   // }
 };
+export const getUserProfile = async (req, res) => {
+  console.log("In the get Profile Function ");
+  console.log(req.query.email);
+  console.log(req.query.role);
+  console.log(req.query);
+  const User = await AlumniProfile.find(req.query);
+  console.log("User Deatils", User);
+  return res.json(User);
+};
 
 export const postSetProfile = async (req, res) => {
   // const {formData,editing,profileInfo} = req.body;
@@ -383,7 +409,23 @@ export const postSetProfile = async (req, res) => {
   }
   // console.log(formData);
 };
+export const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: req.profile._id },
+      { $set: req.body },
+      { new: true, useFindAndModify: false }
+    );
 
+    user.salt = undefined;
+    user.secure_password = undefined;
+    res.json(user);
+  } catch (error) {
+    return res.status(400).json({
+      error: "You are not allowed to update this info",
+    });
+  }
+};
 export const postSetProfileStudent = async (req, res) => {
   // const {formData,editing,profileInfo} = req.body;
   const userId = req.user._id;

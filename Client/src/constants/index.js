@@ -167,6 +167,7 @@ export const AlumniFeatures = [
     backgroundUrl: "./src/assets/benefits/card-5.svg",
     iconUrl: benefitIcon1,
     imageUrl: event,
+    linkUrl: "/jobs",
   },
   {
     id: "5",
@@ -197,7 +198,7 @@ export const StudentFeatures = [
     iconUrl: benefitIcon2,
     imageUrl: donation,
     light: true,
-    linkUrl: "",
+    linkUrl: "/scholarshipform",
   },
   {
     id: "2",
@@ -206,6 +207,7 @@ export const StudentFeatures = [
     backgroundUrl: "./src/assets/benefits/card-3.svg",
     iconUrl: benefitIcon3,
     imageUrl: oppurtunity,
+    linkUrl: "/jobs",
   },
   {
     id: "3",
@@ -238,22 +240,22 @@ export const StudentFeatures = [
 export const AdminFeatures = [
   {
     id: "0",
-    title: "Join the Alumni Network",
+    title: "Alumni Directory",
     text: "Register to join our alumni community, update your profile, and stay connected with peers.",
     backgroundUrl: "./src/assets/benefits/card-1.svg",
     iconUrl: benefitIcon1,
     imageUrl: network,
-    linkUrl: "/alumnidirectory",
+    linkUrl: "/alumnitable",
   },
   {
     id: "1",
-    title: "Make a Donation",
+    title: "Student Directory",
     text: "Contribute to scholarships, research, and projects. Your donation makes a difference!",
     backgroundUrl: "./src/assets/benefits/card-2.svg",
     iconUrl: benefitIcon2,
     imageUrl: donation,
     light: true,
-    linkUrl: "/donation",
+    linkUrl: "/studentDirectory",
   },
   {
     id: "2",
@@ -262,6 +264,7 @@ export const AdminFeatures = [
     backgroundUrl: "./src/assets/benefits/card-3.svg",
     iconUrl: benefitIcon3,
     imageUrl: oppurtunity,
+    linkUrl: "/jobs",
   },
   {
     id: "3",
@@ -282,11 +285,12 @@ export const AdminFeatures = [
   },
   {
     id: "5",
-    title: "Provide Feedback",
+    title: "Feedback History",
     text: "Help us improve by sharing feedback and participating in surveys. Your voice matters!",
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon2,
     imageUrl: feedback,
+    linkUrl: "/feedbacks",
   },
 ];
 

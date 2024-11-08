@@ -18,11 +18,30 @@ const ScholarshipForm = () => {
               name="fullname"
             />
             <input
-              placeholder="Reason for application"
+              placeholder="Email Address"
               className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
-              type="password"
-              name="password"
+              type="email"
+              name="sEmail"
             />
+            <input
+              placeholder="Caste"
+              className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
+              type="text"
+              name="caste"
+            />
+            <input
+              placeholder="Annual Fees"
+              className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
+              type="text"
+              name="fees"
+            />
+            <textarea
+              placeholder="Reason for application"
+              className="bg-n-7 text-n-3
+              border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none
+              focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
+              name="reason"
+            ></textarea>
 
             <Button className="hidden lg:flex">Apply</Button>
           </form>

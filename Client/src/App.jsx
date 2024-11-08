@@ -17,6 +17,10 @@ import Alumni from "./pages/Alumni";
 import Student from "./pages/Student";
 import Fees from "./components/Fees";
 import JobPosting from "./components/JobPosting";
+import ScholarshipForm from "./components/ScholarshipForm";
+import Jobs from "./components/Jobs";
+import FeedbackHistory from "./components/FeedbackHistory";
+import StudentDirectory from "./components/StudentDirectory";
 
 const Layout = () => {
   return (
@@ -103,8 +107,8 @@ const App = () => {
           ),
         },
         {
-          path: "*",
-          element: {},
+          path: "/scholarshipform",
+          element: <ScholarshipForm />,
         },
         {
           path: "/student",
@@ -113,6 +117,18 @@ const App = () => {
         {
           path: "/jobposting",
           element: <JobPosting />,
+        },
+        {
+          path: "/jobs",
+          element: <Jobs />,
+        },
+        {
+          path: "/feedbacks",
+          element: <FeedbackHistory />,
+        },
+        {
+          path: "/studentDirectory",
+          element: <StudentDirectory />,
         },
       ],
     },

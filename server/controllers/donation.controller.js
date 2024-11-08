@@ -16,13 +16,12 @@ export const postFees = async (req, res) => {
   console.log("here");
   const { studentName, category, fees, phoneNumber } = req.body;
 
-  // For the Testing purpose 
+  // For the Testing purpose
   const userId = req.user;
   console.log(userId);
   // console.log(userId);
   console.log(req.params.id);
-  // The above must be deleted 
-
+  // The above must be deleted
 
   console.log(studentName, category, fees, phoneNumber);
   await Fee.create({
