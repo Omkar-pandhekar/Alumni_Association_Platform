@@ -172,11 +172,12 @@ const Profile = () => {
   // Add new skill
   const handleAddSkill = () => {
     if (newSkill.trim()) {
+      const skillsToAdd = newSkill.split(",").map((skill) => skill.trim()); // Split by comma and trim whitespace
       setProfileInfo((prev) => ({
         ...prev,
-        skills: [...prev.skills, newSkill.trim()],
+        skills: [...prev.skills, ...skillsToAdd], // Spread the new skills into the existing array
       }));
-      setNewSkill("");
+      setNewSkill(""); // Clear the input after adding
     }
   };
 
@@ -309,15 +310,15 @@ const Profile = () => {
           <h2 className="text-2xl font-semibold text-n-1 mb-4">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {Array.isArray(profileInfo.skills) &&
-              profileInfo?.skills.map((skill, index) => (
-                <div key={index} className="flex items-center gap-2">
+              profileInfo.skills.map((skill, index) => (
+                <div key={index} className="flex items-center">
                   <span className="px-3 py-1 bg-blue-500 text-white rounded-full">
                     {skill}
                   </span>
                   {editing && (
                     <button
                       onClick={() => handleRemoveSkill(index)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-red-700 ml-2"
                     >
                       ✕
                     </button>

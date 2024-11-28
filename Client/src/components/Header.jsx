@@ -12,7 +12,7 @@ const Header = () => {
   // const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user,setUser] = useState();
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,15 +21,15 @@ const Header = () => {
     if (token) {
       setIsLoggedIn(true);
 
-      if(user=='alumni')  setUser('/alumni');
-      if(user=="student") setUser('/student');
-      if(user==='admin') setUser('/adminprofile');
-
+      if (user == "alumni") setUser("/alumni");
+      if (user == "student") setUser("/student");
+      if (user === "admin") setUser("/adminprofile");
+    } else {
+      setIsLoggedIn(false);
     }
   }, []);
 
-  
-console.log(user);
+  console.log(user);
   const toggleNavigation = () => {
     if (openNavigation) {
       setOpenNavigation(false);
@@ -121,7 +121,7 @@ console.log(user);
                   Log out{" "}
                 </button>
               </Button>
-              <Link to={ `${user}`} >
+              <Link to={`${user}`}>
                 <Button className="hidden lg:flex">
                   <button type="submit"> Profile </button>
                 </Button>

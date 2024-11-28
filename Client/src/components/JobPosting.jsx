@@ -58,6 +58,9 @@ const JobPosting = () => {
             text: "Job has been posted successfully",
             icon: "success",
             confirmButtonText: "OK",
+            customClass: {
+              popup: "bg-n-7 text-white",
+            },
           });
           // Clear the form after successful submission
           setDetails({

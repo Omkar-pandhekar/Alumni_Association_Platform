@@ -5,6 +5,7 @@ import { GradientLight } from "./design/Benefits";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -24,14 +25,13 @@ const Login = () => {
         console.log(result);
         console.log(result.data);
         console.log(result.data.token);
-        console.log(result.data.token);
         console.log(result.data.message);
 
         if (result.data.token) {
           localStorage.setItem("authToken", result.data.token);
-          localStorage.setItem("authUser",result.data.message);
-          
+          localStorage.setItem("authUser", result.data.message);
         }
+
         if (result.data.status && result.data.message === "admin") {
           navigate("/adminprofile");
         } else if (result.data.status && result.data.message === "alumni") {
@@ -40,7 +40,18 @@ const Login = () => {
           navigate("/student");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          text: "Invalid email or password. Please try again.",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+          customClass: {
+            popup: "bg-n-7 text-white",
+          },
+        });
+      });
   };
 
   return (

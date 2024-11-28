@@ -42,6 +42,20 @@ const AlumniDirectory = () => {
     setFilteredAlumni(filtered);
   }, [searchQuery, selectedField, alumniDetails]);
 
+  const deleteAlumni = async (id) => {
+    const response = await fetch(`/api/v1/alumni/alumnidetails/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      // Remove the deleted alumni from the state
+      setAlumniDetails(alumniDetails.filter((alumni) => alumni.id !== id));
+    }
+  };
+
   return (
     <Section>
       <Heading className="md:max-w-md lg:max-w-4xl" title="Alumni Directory" />
@@ -92,6 +106,7 @@ const AlumniDirectory = () => {
                   </th>
                   <th className="py-2 px-4 border-b-2 border-n-7">Email</th>
                   <th className="py-2 px-4 border-b-2 border-n-7">Field</th>
+                  <th className="py-2 px-4 border-b-2 border-n-7">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,11 +120,19 @@ const AlumniDirectory = () => {
                       <td className="py-3 px-4">{person.yearOfGraduation}</td>
                       <td className="py-3 px-4">{person.email}</td>
                       <td className="py-3 px-4">{person.field}</td>
+                      <td className="py-3 px-4">
+                        <button
+                          onClick={() => deleteAlumni(person.id)}
+                          className="text-red-500"
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="py-4 text-center">
+                    <td colSpan="6" className="py-4 text-center">
                       No results found.
                     </td>
                   </tr>

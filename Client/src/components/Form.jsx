@@ -48,6 +48,9 @@ const Form = () => {
           text: "Registration successful! Please login to continue.",
           icon: "success",
           confirmButtonColor: "#3085d6",
+          customClass: {
+            popup: "bg-n-7 text-white",
+          },
         }).then((result) => {
           if (result.isConfirmed) {
             navigate("/login");
@@ -62,6 +65,9 @@ const Form = () => {
             "Registration failed. Please try again.",
           icon: "error",
           confirmButtonColor: "#d33",
+          customClass: {
+            popup: "bg-n-7 text-white",
+          },
         });
       });
   };
