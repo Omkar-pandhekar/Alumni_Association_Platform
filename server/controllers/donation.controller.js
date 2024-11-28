@@ -32,3 +32,14 @@ export const postFees = async (req, res) => {
   });
   res.json("One Data Created !");
 };
+
+export const getAllFeesDonations = async (req, res) => {
+  try {
+    const allFees = await Fee.find({});
+    res.status(200).json(allFees);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching fees donations", error: error.message });
+  }
+};

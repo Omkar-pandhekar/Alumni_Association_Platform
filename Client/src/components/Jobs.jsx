@@ -5,7 +5,8 @@ import axios from "axios";
 
 const AlumniStudentPosts = () => {
   const [jobPost, setJobPost] = useState([]);
-  // const [user, setUser] = useState();
+  const [users, setUsers] = useState({});
+
   useEffect(() => {
     const getBlogsData = async () => {
       const response = await fetch(`/api/v1/job/getAllJobPosts`, {
@@ -26,6 +27,28 @@ const AlumniStudentPosts = () => {
     console.log("jopost data", jobPost);
   }, []);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userPromises = jobPost.map((post) =>
+          axios.get(`/api/v1/job/getuser/${post.user}`)
+        );
+        const responses = await Promise.all(userPromises);
+        const userMap = {};
+        responses.forEach((res, index) => {
+          userMap[jobPost[index].user] = res.data;
+        });
+        setUsers(userMap);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    if (jobPost.length > 0) {
+      fetchUsers();
+    }
+  }, [jobPost]);
+
   return (
     <Section>
       {/* <div className="min-h-screen bg-n-8 py-10 px-4"> */}
@@ -39,13 +62,14 @@ const AlumniStudentPosts = () => {
             >
               <div className="flex items-center mb-4">
                 <img
-                  src={post.profilePhoto}
+                  src="https://thumbs.dreamstime.com/b/profile-pic-icon-isolated-white-background-your-web-mobile-app-design-133862807.jpg"
                   alt={post.author}
                   className="w-16 h-16 rounded-full mr-3"
                 />
                 <div>
                   <h3 className="text-lg font-semibold text-n-1">
-                    {post.author}
+                    {users[post.user]?.fname + " " + users[post.user]?.lname ||
+                      "Loading..."}
                   </h3>
                   <span className="text-sm text-n-2">
                     {" "}
@@ -97,15 +121,6 @@ const AlumniStudentPosts = () => {
                   }
                 )}
               </p>
-              {/* <p className="text-n-2 mt-4">
-                <span className="text-n-1">Application user : </span>
-                {axios
-                  .get(`/api/v1/job/getuser/${post.user}`)
-                  .then(function (res) {
-                    setUser(res.data);
-                  })}
-                {user?.fname}
-              </p> */}
             </div>
           ))}
         </div>

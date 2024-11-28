@@ -21,6 +21,10 @@ import ScholarshipForm from "./components/ScholarshipForm";
 import Jobs from "./components/Jobs";
 import FeedbackHistory from "./components/FeedbackHistory";
 import StudentDirectory from "./components/StudentDirectory";
+import Events from "./components/Events";
+import PostEvents from "./components/PostEvents";
+import StudentDetails from "./components/StudentDetails";
+import DonationHistory from "./components/DonationHistory";
 
 const Layout = () => {
   return (
@@ -129,6 +133,22 @@ const App = () => {
         {
           path: "/studentDirectory",
           element: <StudentDirectory />,
+        },
+        {
+          path: "/events",
+          element: <Events />,
+        },
+        {
+          path: "/eventposting",
+          element: <PostEvents />,
+        },
+        {
+          path: "/studentDetails",
+          element: <StudentDetails />,
+        },
+        {
+          path: "/donationhistory",
+          element: <DonationHistory />,
         },
       ],
     },

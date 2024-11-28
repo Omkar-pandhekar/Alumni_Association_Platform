@@ -6,7 +6,7 @@ import Section from "../components/Section";
 const AdminProfile = () => {
   return (
     <Section>
-      <Heading title="Hello" />
+      <Heading title="Hello Admin" />
       <AdminFeature />
     </Section>
   );

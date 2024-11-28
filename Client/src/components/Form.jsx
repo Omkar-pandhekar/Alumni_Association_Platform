@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Form = () => {
   const [fname, setFname] = useState("");
@@ -42,10 +43,27 @@ const Form = () => {
         field,
       })
       .then((result) => {
-        console.log(result);
-        navigate("/login");
+        Swal.fire({
+          title: "Success!",
+          text: "Registration successful! Please login to continue.",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Swal.fire({
+          title: "Error!",
+          text:
+            err.response?.data?.message ||
+            "Registration failed. Please try again.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+        });
+      });
   };
 
   return (
@@ -128,12 +146,11 @@ const Form = () => {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-             >
+            >
               <option value="">Select Role</option>
               <option value="alumni">Alumni</option>
               <option value="student">Student</option>
               <option value="admin"> Admin</option>
-
             </select>
 
             {/* Year of Admission and Graduation */}

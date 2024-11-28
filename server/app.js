@@ -13,6 +13,7 @@ import DonationRoutes from "./routes/donation.route.js";
 import JobRoutes from "./routes/job.route.js";
 import AlumniRoutes from "./routes/alumni.route.js";
 import StudentRoutes from "./routes/student.route.js";
+import eventRoutes from "./routes/event.route.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -49,3 +50,4 @@ app.use("/api/v1/donate/", DonationRoutes);
 app.use("/api/v1/job/", JobRoutes);
 app.use("/api/v1/alumni/", AlumniRoutes);
 app.use("/api/v1/student/", StudentRoutes);
+app.use("/api/v1/event/", eventRoutes);

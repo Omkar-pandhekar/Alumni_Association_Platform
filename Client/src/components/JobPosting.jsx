@@ -5,6 +5,7 @@ import Button from "./Button";
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
 const JobPosting = () => {
   var token = localStorage.getItem("authToken");
@@ -52,12 +53,35 @@ const JobPosting = () => {
       if (response) {
         var data = await response.json();
         if (data.message) {
-          // navigate("/doctor/listblog");
-          console.log(data);
+          Swal.fire({
+            title: "Success!",
+            text: "Job has been posted successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          // Clear the form after successful submission
+          setDetails({
+            jobTitle: "",
+            companyName: "",
+            jobLocation: "",
+            jobType: "",
+            jobDescription: "",
+            qualifications: "",
+            applicationLink: "",
+            applicationDeadline: "",
+            user: user,
+          });
         }
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong while posting the job",
+        icon: "error",
+        confirmButtonText: "OK",
+        background: "bg-n-8",
+      });
     }
   };
 

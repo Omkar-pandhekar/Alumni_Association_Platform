@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Heading from "./Heading";
 import Section from "./Section";
+import Heading from "./Heading";
 
-const StudentDirectory = () => {
+const StudentDetails = () => {
   const [studentDetails, setStudentDetails] = useState([]);
   const [filteredStudent, setFilteredStudent] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -201,22 +201,6 @@ const StudentDirectory = () => {
                 <thead className="sticky top-0 bg-n-7">
                   <tr>
                     <th className="py-2 px-4 border-b-2 border-n-7">
-                      <input
-                        type="checkbox"
-                        checked={selectAll}
-                        onChange={handleSelectAll}
-                        className="rounded border-n-6"
-                      />
-                    </th>
-                    <th
-                      className="py-2 px-4 border-b-2 border-n-7 cursor-pointer"
-                      onClick={() => handleSort("name")}
-                    >
-                      Name{" "}
-                      {sortConfig.key === "name" &&
-                        (sortConfig.direction === "asc" ? "↑" : "↓")}
-                    </th>
-                    <th className="py-2 px-4 border-b-2 border-n-7">
                       Year of admission
                     </th>
                     <th className="py-2 px-4 border-b-2 border-n-7">
@@ -230,14 +214,6 @@ const StudentDirectory = () => {
                   {currentStudents.length > 0 ? (
                     currentStudents.map((person) => (
                       <tr key={person.id} className="border-t border-gray-300">
-                        <td className="py-3 px-4">
-                          <input
-                            type="checkbox"
-                            checked={selectedStudents.includes(person.id)}
-                            onChange={() => handleSelectStudent(person.id)}
-                            className="rounded border-n-6"
-                          />
-                        </td>
                         <td className="py-3 px-4">
                           {person.fname + " " + person.lname}
                         </td>
@@ -335,4 +311,4 @@ const StudentDirectory = () => {
   );
 };
 
-export default StudentDirectory;
+export default StudentDetails;

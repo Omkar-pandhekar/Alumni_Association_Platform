@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 import { useState } from "react";
+import Fees from "./Fees";
+import Swal from "sweetalert2";
 
 const Donation = () => {
   const [phoneNumber, setPhoneNumber] = useState();
@@ -23,9 +25,23 @@ const Donation = () => {
       })
       .then((result) => {
         console.log(result);
+        Swal.fire({
+          title: "Success!",
+          text: "Thank you for your donation!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
         navigate("/donation");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong with your donation.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   return (
@@ -78,6 +94,7 @@ const Donation = () => {
       {/* Second Form */}
 
       {/* </div> */}
+      <Fees />
     </Section>
   );
 };

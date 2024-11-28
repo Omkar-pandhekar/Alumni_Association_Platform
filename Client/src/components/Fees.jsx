@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import Swal from "sweetalert2";
 
 const Fees = () => {
   const handleFeesSelection = (person) => {
@@ -30,9 +31,23 @@ const Fees = () => {
       })
       .then((result) => {
         console.log(result);
-        navigate("/fees");
+        Swal.fire({
+          title: "Success!",
+          text: "Thank you for your donation!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        navigate("/donation");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong with your donation.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   return (
