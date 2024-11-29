@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Section from "./Section";
+import {useNavigate } from "react-router-dom";
 
 const AlumniTable = () => {
   const [alumniDetails, setAlumniDetails] = useState([]);
@@ -9,7 +10,7 @@ const AlumniTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedField, setSelectedField] = useState("");
   const [showEmailModal, setShowEmailModal] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const getBlogsData = async () => {
       const response = await fetch(`/api/v1/alumni/alumnidetails`, {
@@ -86,7 +87,30 @@ const AlumniTable = () => {
   const handleSendEmail = () => {
     setShowEmailModal(true);
   };
-
+  const HandleEmailSender = () => {
+    const emailList = alumniDetails
+      .filter((alumni) =>
+        selectedRows.includes(alumni.id || alumni._id)
+      )
+      .map((alumni) => alumni.email)
+      .join(",");
+    const emailArray = alumniDetails
+    .filter((alumni) =>
+      selectedRows.includes(alumni.id || alumni._id)
+    )
+    .map((alumni) => alumni.email);
+    // .join(",");
+    // window.location.href = `mailto:${emailList}`;
+    console.log(emailList);
+    console.log(emailArray);
+    
+    setShowEmailModal(false);
+    navigate("/emailSender",{
+      state:{
+        emailArray,
+      }
+    });
+  };
   return (
     <Section>
       <Heading className="md:max-w-md lg:max-w-4xl" title="Alumni Directory" />
@@ -250,16 +274,7 @@ const AlumniTable = () => {
                 Cancel
               </button>
               <button
-                onClick={() => {
-                  const emailList = alumniDetails
-                    .filter((alumni) =>
-                      selectedRows.includes(alumni.id || alumni._id)
-                    )
-                    .map((alumni) => alumni.email)
-                    .join(",");
-                  window.location.href = `mailto:${emailList}`;
-                  setShowEmailModal(false);
-                }}
+                onClick={HandleEmailSender}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
               >
                 Compose Email

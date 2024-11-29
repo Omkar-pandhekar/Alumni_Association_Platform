@@ -25,6 +25,7 @@ import Events from "./components/Events";
 import PostEvents from "./components/PostEvents";
 import StudentDetails from "./components/StudentDetails";
 import DonationHistory from "./components/DonationHistory";
+import EmailSender from "./components/EmailSender";
 
 const Layout = () => {
   return (
@@ -149,6 +150,10 @@ const App = () => {
         {
           path: "/donationhistory",
           element: <DonationHistory />,
+        },
+        {
+          path:"/emailSender",
+          element:<EmailSender/>,
         },
       ],
     },

@@ -1,12 +1,20 @@
 import Heading from "../components/Heading";
 import ScholarshipTable from "./ScholarshipTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Swal from "sweetalert2";
 
 const Fees = () => {
+
+  useEffect(() => {
+    axios.get("/api/v1/donate/getAllStudentForm")
+    .then(response => {
+      console.log(response);
+    }).catch(err => console.log(err));
+  },[]);
+
   const handleFeesSelection = (person) => {
     setSelectedPerson(person);
   };
