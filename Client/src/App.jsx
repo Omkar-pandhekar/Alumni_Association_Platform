@@ -26,6 +26,8 @@ import PostEvents from "./components/PostEvents";
 import StudentDetails from "./components/StudentDetails";
 import DonationHistory from "./components/DonationHistory";
 import EmailSender from "./components/EmailSender";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const Layout = () => {
   return (
@@ -155,6 +157,13 @@ const App = () => {
           path:"/emailSender",
           element:<EmailSender/>,
         },
+        {
+          path:"/forgotpassword",
+          element:<ForgotPassword/>
+        },{
+          path:"/resetpassword/:token",
+          element:<ResetPassword/>
+        }
       ],
     },
   ]);

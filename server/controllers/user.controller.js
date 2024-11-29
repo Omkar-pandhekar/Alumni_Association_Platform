@@ -8,6 +8,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.util.js";
 import { AlumniProfile } from "../models/alumniProfile.model.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { studentProfile } from "../models/studentProfile.model.js";
+import { sendMail } from "../utils/sendMail.util.js";
 
 // import {sendCookie}  from "../utils/cookieparse.util.js";
 
@@ -492,3 +493,110 @@ export const postSetProfileStudent = async (req, res) => {
   }
   //  console.log(formData);
 };
+
+export const postForgotPassword = async (req,res) => {
+  console.log(req.body);
+  const {email,role} = req.body;
+  try{
+    if(role==="alumni") {
+      const user = await Alumni.findOne({email});
+      if(!user) {
+          return res.status(404).json({
+            success:false,
+            message:'User Not Registered !'
+          });
+      }
+
+      const token = jwt.sign({id:user._id,role:role},process.env.JWT_SECRET,{expiresIn:'10min'});
+      console.log(token);
+
+      const mailText = `${process.env.HOST_LINK}/resetPassword/${token}`;
+       const response =  sendMail(email,"Reset Password",mailText,res);
+       res.status(200).json({
+        success:true,
+        message:"Password Changed Mail has been sent !"
+
+       })
+       return response;
+
+    }else if (role ==="student") {
+      const user = await Student.findOne({email});
+      if(!user) {
+          return res.status(404).json({
+            success:false,
+            message:'User Not Registered !'
+          });
+      }
+
+      const token = jwt.sign({id:user._id,role:role},process.env.JWT_SECRET,{expiresIn:'10min'});
+      console.log(token);
+
+      const mailText = `${process.env.HOST_LINK}/resetPassword/${token}`;
+       const response =  sendMail(email,"Reset Password",mailText,res);
+       res.status(200).json({
+        success:true,
+        message:"Password Changed Mail has been sent !"
+
+       })
+       return response;
+
+    }else if (role ==="admin") {
+      const user = await Admin.findOne({email});
+      if(!user) {
+          return res.status(404).json({
+            success:false,
+            message:'User Not Registered !'
+          });
+      }
+
+      const token = jwt.sign({id:user._id,role:role},process.env.JWT_SECRET,{expiresIn:'10min'});
+      console.log(token);
+
+      const mailText = `${process.env.HOST_LINK}/resetPassword/${token}`;
+       const response =  sendMail(email,"Reset Password",mailText,res);
+       res.status(200).json({
+        success:true,
+        message:"Password Changed Mail has been sent !"
+
+       })
+       return response;
+
+    }
+  }catch(error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+};
+
+export const postResetPassword = async (req,res) => {
+  const token = req.params.token;
+    const {reset} = req.body;
+    console.log(token,reset);
+    try{
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const id = decoded.id;
+        const role = decoded.role;
+        const hashedPassword = await bcrypt.hash(reset,10);
+        if(role==='alumni') {
+          await Alumni.findByIdAndUpdate({_id:id },{password: hashedPassword});
+          return res.status(201).json({success: true,message:"Updated Password !"});
+        }
+        else if(role==='student') {
+          await Student.findByIdAndUpdate({_id:id },{password: hashedPassword});
+          return res.status(201).json({success: true,message:"Updated Password !"});
+        }
+        else if(role==='admin') {
+          await Admin.findByIdAndUpdate({_id:id },{password: hashedPassword});
+          return res.status(201).json({success: true,message:"Updated Password !"});
+        }
+    }catch(err) {
+        console.log(err);
+        return res.status(500).json({
+          success:false,
+          message:"Invalid Token"
+        });
+    }
+}

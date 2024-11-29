@@ -3,8 +3,10 @@ import {
   getLogout,
   getProfile,
   getUserProfile,
+  postForgotPassword,
   postLogin,
   postRegister,
+  postResetPassword,
   postSetProfile,
   postSetProfileStudent,
   updateUser,
@@ -21,6 +23,8 @@ router.get("/userprofile", isAuthenticated, getUserProfile);
 // Post Api
 router.post("/signup", postRegister);
 router.post("/login", postLogin);
+router.post("/forgotpassword",postForgotPassword);
+router.post("/resetpassword/:token",postResetPassword);
 // router.post('/setprofile',upload.fields([{name:'profilePhoto'},{name:'backgroundImage'}]),postSetProfile);
 router.post(
   "/setprofile",
