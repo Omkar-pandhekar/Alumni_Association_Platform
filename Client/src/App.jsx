@@ -10,7 +10,7 @@ import AlumniTable from "./components/AlumniTable";
 import AlumniDirectory from "./components/AlumniDirectory";
 import AdminProfile from "./pages/AdminProfile";
 import Donation from "./components/Donation";
-// import ProtectedRoute from "./components/ProtectedRoutes";
+import ProtectedRoute from "./components/ProtectedRoutes";
 // import StudentProfile from "./components/StudentProfile";
 import Contact from "./components/Contact";
 import Alumni from "./pages/Alumni";
@@ -28,6 +28,10 @@ import DonationHistory from "./components/DonationHistory";
 import EmailSender from "./components/EmailSender";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import AboutUs from "./components/AboutUs";
+import Gallery from "./components/gallery";
+import Benefits from "./components/Benefits";
+import InfraHistory from "./components/InfraHistory";
 
 const Layout = () => {
   return (
@@ -57,6 +61,18 @@ const App = () => {
           path: "/login",
           element: <Login />,
         },
+        {
+          path:"/aboutus",
+          element:<AboutUs/>
+        },
+        // {
+        //   path:"/login",
+        //   element: (
+        //     <ProtectedRoute >
+        //       <Login/>
+        //     </ProtectedRoute>
+        //   )
+        // },
         {
           path: "/contact",
           element: <Contact />,
@@ -163,6 +179,18 @@ const App = () => {
         },{
           path:"/resetpassword/:token",
           element:<ResetPassword/>
+        },
+        {
+          path:"/gallery",
+          element:<Gallery/>
+        },
+        {
+          path:"/benefit",
+          element:<Benefits/>
+        },
+        {
+          path:"/infrahistory",
+          element:<InfraHistory/>
         }
       ],
     },

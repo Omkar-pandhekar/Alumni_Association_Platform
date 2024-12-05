@@ -21,74 +21,76 @@ const Profile = () => {
     { id: 3, name: "Clara Lee", relation: "Friend" },
   ]);
 
-  // useEffect(() => {
-  //   axios.get("/api/v1/user/profile").then((res) => {
-  //     console.log(res);
-  //     console.log(res.data.length);
-  //     console.log(res.data.email);
-
-  //     setProfileInfo({
-  //       name: res.data.name,
-  //       bio: res.data.bio,
-  //       location: res.data.location,
-  //       email: res.data.email,
-  //       phone: res.data.phone,
-  //       skills: res.data.skills,
-  //       profilePhoto: res.data.profilePhoto,
-  //       backgroundImage: res.data.backgroundImage,
-  //     });
-  //   });
-  // }, []);
-
   useEffect(() => {
-    var token = localStorage.getItem("authToken");
-    const decoded = jwtDecode(token);
-    console.log("Here", decoded);
-    const { email, role } = decoded;
-    const getUserProfileData = async () => {
-      try {
-        console.log(email, "and", role);
-        const response = await axios.get(
-          `/api/v1/user/userprofile?email=${decoded.email}&role=${decoded.role}`
-        );
-        var profileData;
-        console.log(response);
-        if (response) {
-          profileData = await response.data[0];
-          console.log("response data:", profileData);
-        }
+    axios.get("/api/v1/user/profile").then((res) => {
+      console.log(res);
+      console.log(res.data.length);
+      console.log(res.data.email);
 
-        if (!profileData.error) {
-          setProfileInfo({
-            name: decoded.fullName,
-            ...profileData,
-          });
-        } else {
-          setProfileInfo({
-            name: "Rajat Ranvir",
-            bio: "Add bio",
-            location: "San Francisco, CA",
-            email: "rajatranvir@gmail.com",
-            phone: "+1 234 567 890",
-            skills: [
-              "React",
-              "Node.js",
-              "JavaScript",
-              "Tailwind CSS",
-              "MongoDB",
-            ],
-            profilePhoto: "", // Default profile photo
-            backgroundImage: "", // Default background image
-          });
-        }
-      } catch (error) {
-        return console.log(error);
-      }
-    };
-    getUserProfileData();
-    console.log(profileInfo);
+      setProfileInfo({
+        name: res.data.name,
+        bio: res.data.bio,
+        location: res.data.location,
+        email: res.data.email,
+        phone: res.data.phone,
+        skills: res.data.skills,
+        profilePhoto: res.data.profilePhoto,
+        backgroundImage: res.data.backgroundImage,
+      });
+    });
   }, []);
 
+  // useEffect(() => {
+  //   var token = localStorage.getItem("authToken");
+  //   const decoded = jwtDecode(token);
+  //   console.log("Here", decoded);
+  //   const { email, role } = decoded;
+  //   const getUserProfileData = async () => {
+  //     try {
+  //       console.log(email, "and", role);
+  //       const response = await axios.get(
+  //         `/api/v1/user/userprofile?email=${decoded.email}&role=${decoded.role}`
+  //       );
+  //       var profileData;
+  //       console.log(response);
+  //       if (response) {
+  //         profileData = await response.data[0];
+  //         console.log("response data:", profileData);
+  //       }
+
+  //       if (!profileData.error) {
+  //         setProfileInfo({
+  //           name: decoded.fullName,
+  //           ...profileData,
+  //         });
+  //       } else {
+  //         setProfileInfo({
+  //           name: "Rajat Ranvir",
+  //           bio: "Add bio",
+  //           location: "San Francisco, CA",
+  //           email: "rajatranvir@gmail.com",
+  //           phone: "+1 234 567 890",
+  //           skills: [
+  //             "React",
+  //             "Node.js",
+  //             "JavaScript",
+  //             "Tailwind CSS",
+  //             "MongoDB",
+  //           ],
+  //           profilePhoto: "", // Default profile photo
+  //           backgroundImage: "", // Default background image
+  //         });
+  //       }
+  //     } catch (error) {
+  //       return console.log(error);
+  //     }
+  //   };
+  //   getUserProfileData();
+  //   console.log(profileInfo);
+  // }, []);
+
+
+  
   // Toggle editing mode
   const handleEditToggle = (e) => {
     e.preventDefault();

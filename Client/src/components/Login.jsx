@@ -4,15 +4,17 @@ import Button from "./Button";
 import { GradientLight } from "./design/Benefits";
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
   axios.defaults.withCredentials = true;
-
+  
   const HandleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -31,13 +33,18 @@ const Login = () => {
           localStorage.setItem("authToken", result.data.token);
           localStorage.setItem("authUser", result.data.message);
         }
-
+        
         if (result.data.status && result.data.message === "admin") {
+
           navigate("/adminprofile");
+          window.location.reload();
         } else if (result.data.status && result.data.message === "alumni") {
           navigate("/alumni");
+          window.location.reload();
+          
         } else {
           navigate("/student");
+          window.location.reload();
         }
       })
       .catch((err) => {

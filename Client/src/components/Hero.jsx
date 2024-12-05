@@ -27,7 +27,7 @@ const Hero = () => {
             Your Alumni Association Hub for Networking, Opportunities, and
             Lifelong Engagement!
           </p>
-          <Button href="/pricing" white>
+          <Button href="/aboutus" white>
             Know more
           </Button>
         </div>

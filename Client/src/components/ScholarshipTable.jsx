@@ -1,77 +1,90 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ScholarshipTable = (props) => {
   const handleSelection = (person) => {
     props.onFeesSelect(person);
   };
-  const [alumni, setAlumni] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 3,
-      name: "Michael Lee",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 4,
-      name: "Emma Wilson",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 5,
-      name: "Daniel Evans",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 6,
-      name: "Sophia Martinez",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 7,
-      name: "Liam Brown",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 8,
-      name: "Olivia Davis",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 9,
-      name: "Noah Johnson",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 10,
-      name: "Ava Taylor",
-      category: "Open",
-      fees: 10000,
-    },
-    {
-      id: 11,
-      name: "Elijah Moore",
-      category: "Open",
-      fees: 10000,
-    },
-  ]);
+
+
+  // const [alumni, setAlumni] = useState([
+  //   {
+  //     id: 1,
+  //     name: "John Doe",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Jane Smith",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Michael Lee",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Emma Wilson",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Daniel Evans",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Sophia Martinez",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Liam Brown",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Olivia Davis",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Noah Johnson",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Ava Taylor",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  //   {
+  //     id: 11,
+  //     name: "Elijah Moore",
+  //     category: "Open",
+  //     fees: 10000,
+  //   },
+  // ]);
+
+  const [alumni,setAlumni] = useState([]);
+
+  useEffect(() => {
+    axios.get("/api/v1/donate/getAllStudentForm")
+    .then(response => {
+      console.log(response);
+      setAlumni(response.data.StudentData);
+    }).catch(err => console.log(err));
+  },[]);
 
   // State to manage the search input and category filter
   const [searchTerm, setSearchTerm] = useState("");
@@ -85,7 +98,7 @@ const ScholarshipTable = (props) => {
 
   // Filtered alumni based on search term and category
   const filteredAlumni = alumni.filter((person) => {
-    const matchesSearch = person.name
+    const matchesSearch = person.fullName
       .toLowerCase()
       .includes(searchTerm.toLowerCase().trim());
     const matchesCategory = category === "" || person.category === category;
@@ -136,9 +149,9 @@ const ScholarshipTable = (props) => {
               {filteredAlumni.length > 0 ? (
                 filteredAlumni.map((person) => (
                   <tr key={person.id} className="border-t border-gray-300">
-                    <td className="py-3 px-4">{person.name}</td>
-                    <td className="py-3 px-4">{person.category}</td>
-                    <td className="py-3 px-4">{person.fees}</td>
+                    <td className="py-3 px-4">{person.fullName}</td>
+                    <td className="py-3 px-4">{person.caste}</td>
+                    <td className="py-3 px-4">{person.annualFee}</td>
                     <td className="py-3 px-4">
                       <a
                         onClick={() => handleSelection(person)}

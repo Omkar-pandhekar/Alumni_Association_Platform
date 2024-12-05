@@ -4,6 +4,7 @@ const FeesSchema = new mongoose.Schema({
   studentName:String,
   category:String,
   fees:Number,
+  payFee:Number,
   phoneNumber: String,
 },{timestamps:true});
 

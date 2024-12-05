@@ -27,22 +27,22 @@ export const navigation = [
   {
     id: "0",
     title: "Events",
-    url: "#events",
+    url: "/benefit",
   },
   {
     id: "1",
     title: "Gallery",
-    url: "#gallery",
+    url: "/gallery",
   },
   {
     id: "2",
     title: "Contact",
-    url: "#contact",
+    url: "/contact",
   },
   {
     id: "3",
     title: "About us",
-    url: "#about",
+    url: "/aboutus",
   },
   {
     id: "4",
@@ -93,7 +93,7 @@ export const benefits = [
   },
   {
     id: "3",
-    title: "Discover Alumni Success Stories",
+    title: "View Student and  Alumni Details ",
     text: "Read about fellow alumni's achievements and let their stories motivate your journey.",
     backgroundUrl: "./src/assets/benefits/card-4.svg",
     iconUrl: benefitIcon4,
@@ -298,6 +298,14 @@ export const AdminFeatures = [
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon2,
     linkUrl: "/donationhistory",
+  },
+  {
+    id: "7",
+    title: "Infrastructure Donation History",
+    text: "View Donation's history made by alumni and other community. ",
+    backgroundUrl: "./src/assets/benefits/card-6.svg",
+    iconUrl: benefitIcon2,
+    linkUrl: "/infrahistory", 
   },
 ];
 

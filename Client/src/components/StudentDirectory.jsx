@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Section from "./Section";
+import { useNavigate } from "react-router-dom";
 
 const StudentDirectory = () => {
   const [studentDetails, setStudentDetails] = useState([]);
@@ -13,6 +14,8 @@ const StudentDirectory = () => {
   const [error, setError] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const navigate = useNavigate();
   const studentsPerPage = 10;
 
   useEffect(() => {
@@ -93,15 +96,35 @@ const StudentDirectory = () => {
     }
   };
 
-  const handleSelectStudent = (studentId) => {
+  // const handleSelectStudent = (studentId) => {
+  //   setSelectedStudents((prev) => {
+  //     if (prev.includes(studentId)) {
+  //       return prev.filter((id) => id !== studentId);
+  //     } else {
+  //       return [...prev, studentId];
+  //     }
+  //   });
+  // };
+
+  const handleSelectStudent = (id) => {
+    if (!id) return; // Guard clause for missing IDs
+
     setSelectedStudents((prev) => {
-      if (prev.includes(studentId)) {
-        return prev.filter((id) => id !== studentId);
-      } else {
-        return [...prev, studentId];
+      const isCurrentlySelected = prev.includes(id);
+      if (isCurrentlySelected) {
+        return prev.filter((rowId) => rowId !== id);
       }
+      return [...prev, id];
     });
   };
+
+  // const handleSelectStudent = (studentId) => {
+  //   setSelectedStudents((prevSelected) =>
+  //     prevSelected.includes(studentId)
+  //       ? prevSelected.filter((id) => id !== studentId)
+  //       : [...prevSelected, studentId]
+  //   );
+  // };
 
   useEffect(() => {
     const areAllCurrentSelected = currentStudents.every((student) =>
@@ -137,13 +160,42 @@ const StudentDirectory = () => {
     }
   };
 
+  // const handleSendEmail = () => {
+  //   const selectedEmails = studentDetails
+  //     .filter((student) => selectedStudents.includes(student.id))
+  //     .map((student) => student.email)
+  //     .join(",");
+
+  //   window.location.href = `mailto:${selectedEmails}`;
+  // };
   const handleSendEmail = () => {
-    const selectedEmails = studentDetails
-      .filter((student) => selectedStudents.includes(student.id))
+    setShowEmailModal(true);
+  };
+
+
+  const HandleEmailSender = () => {
+    const emailList = studentDetails
+      .filter((student) =>
+        selectedStudents.includes(student.id || student._id)
+      )
       .map((student) => student.email)
       .join(",");
-
-    window.location.href = `mailto:${selectedEmails}`;
+    const emailArray = studentDetails
+    .filter((student) =>
+      selectedStudents.includes(student.id || student._id)
+    )
+    .map((student) => student.email);
+    // .join(",");
+    // window.location.href = `mailto:${emailList}`;
+    console.log(emailList);
+    console.log(emailArray);
+    
+    setShowEmailModal(false);
+    navigate("/emailSender",{
+      state:{
+        emailArray,
+      }
+    });
   };
 
   const handleSort = (key) => {
@@ -233,8 +285,10 @@ const StudentDirectory = () => {
                         <td className="py-3 px-4">
                           <input
                             type="checkbox"
-                            checked={selectedStudents.includes(person.id)}
-                            onChange={() => handleSelectStudent(person.id)}
+                            checked={selectedStudents.includes(
+                              person.id || person._id
+                            )}
+                            onChange={() => handleSelectStudent(person.id || person._id)}
                             className="rounded border-n-6"
                           />
                         </td>
@@ -331,6 +385,48 @@ const StudentDirectory = () => {
           )}
         </div>
       </div>
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-n-8 p-6 rounded-lg max-w-2xl w-full mx-4">
+            <h3 className="text-xl font-bold mb-4">
+              Send Email to Selected Alumni
+            </h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">
+                Recipients:
+              </label>
+              <div className="bg-n-7 p-2 rounded">
+                {studentDetails
+                  .filter((alumni) =>
+                    selectedStudents.includes(alumni.id || alumni._id)
+                  )
+                  .map((alumni) => (
+                    <span
+                      key={alumni.id || alumni._id}
+                      className="inline-block bg-blue-500 text-white rounded px-2 py-1 text-sm m-1"
+                    >
+                      {alumni.email}
+                    </span>
+                  ))}
+              </div>
+            </div>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setShowEmailModal(false)}
+                className="px-4 py-2 bg-n-7 text-white rounded-md hover:bg-n-6 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={HandleEmailSender}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
+              >
+                Compose Email
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Section>
   );
 };
