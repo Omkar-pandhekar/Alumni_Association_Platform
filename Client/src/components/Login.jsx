@@ -43,7 +43,7 @@ const Login = () => {
           window.location.reload();
           
         } else {
-          navigate("/student");
+          navigate("/studentprofile");
           window.location.reload();
         }
       })

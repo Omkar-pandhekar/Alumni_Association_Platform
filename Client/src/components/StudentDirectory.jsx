@@ -136,14 +136,14 @@ const StudentDirectory = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete selected students?")) {
       try {
-        const response = await fetch("/api/v1/student/delete", {
+        const response = await fetch(`/api/v1/student/delete/`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ ids: selectedStudents }),
         });
-
+        console.log(response);
         if (response.ok) {
           setStudentDetails((prev) =>
             prev.filter((student) => !selectedStudents.includes(student.id))

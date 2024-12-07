@@ -40,6 +40,7 @@ const AlumniStudentPosts = () => {
           userMap[jobPost[index].user] = res.data;
         });
         setUsers(userMap);
+        console.log(responses);
       } catch (error) {
         console.error("Error fetching users:", error);
       }

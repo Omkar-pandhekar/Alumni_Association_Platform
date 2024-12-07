@@ -9,7 +9,6 @@ const alumniProfileSchema = new mongoose.Schema(
     skills: [String],
     profilePhoto: String,
     backgroundImage: String,
-    role: String,
     // createdAt:new Date.now(),
   },
   { timestamps: true }

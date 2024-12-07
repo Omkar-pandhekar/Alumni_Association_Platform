@@ -22,7 +22,7 @@ const Header = () => {
       setIsLoggedIn(true);
 
       if (user == "alumni") setUser("/alumni");
-      if (user == "student") setUser("/student");
+      if (user == "student") setUser("/studentprofile");
       if (user === "admin") setUser("/adminprofile");
     } else {
       setIsLoggedIn(false);

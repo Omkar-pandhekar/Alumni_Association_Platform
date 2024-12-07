@@ -32,6 +32,8 @@ import AboutUs from "./components/AboutUs";
 import Gallery from "./components/gallery";
 import Benefits from "./components/Benefits";
 import InfraHistory from "./components/InfraHistory";
+import StudentProfile from "./components/StudentProfile";
+
 
 const Layout = () => {
   return (
@@ -136,6 +138,10 @@ const App = () => {
         {
           path: "/student",
           element: <Student />,
+        },
+        {
+          path: "/studentprofile",
+          element: <StudentProfile />,
         },
         {
           path: "/jobposting",

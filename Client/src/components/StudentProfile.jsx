@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Section from "./Section";
 import AlumniFeatures from "./AlumniFeatures";
 import axios from "axios";
 
-const Profile = () => {
+const StudentProfile = () => {
   axios.get('/login')
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState(""); // State for adding new skill
+  const [uploadProfilePhoto,setUploadProfilePhoto] = useState();
+  const [uploadBackgroundPhoto,setUploadBackgroundPhoto] = useState();
+
   const [profileInfo, setProfileInfo] = useState({
     name: "Rajat Ranvir",
     bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
@@ -31,36 +34,70 @@ const Profile = () => {
   ]);
 
   // Toggle editing mode
-  const handleEditToggle = () => setEditing(!editing);
-
+  
+  const handleEditToggle = (e) => {
+    e.preventDefault();
+    setEditing(!editing);
+    const formData = new FormData();
+    // console.log(profileInfo.profilePhoto);
+    console.log("inside handle toggle", profileInfo.skills);
+    formData.append("profilePhoto", uploadProfilePhoto);
+    formData.append("backgroundImage", uploadBackgroundPhoto);
+    formData.append("name", profileInfo.name);
+    formData.append("bio", profileInfo.bio);
+    formData.append("location", profileInfo.location);
+    formData.append("email", profileInfo.email);
+    formData.append("phone", profileInfo.phone);
+    formData.append("skills", profileInfo.skills);
+    formData.append("editing", !editing);
+    // console.log(formData);
+    if (editing) {
+      axios
+        .put("/api/v1/user/setprofilestudent", formData, {
+          headers: {
+            "content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(formData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   // Handle profile info changes (name, bio, etc.)
   const handleProfileChange = (e) => {
     setProfileInfo({ ...profileInfo, [e.target.name]: e.target.value });
   };
 
-  // Handle profile photo change
+ 
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileInfo({ ...profileInfo, profilePhoto: reader.result });
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file); 
+      setProfileInfo({ 
+        ...profileInfo, 
+        profilePhoto: previewUrl 
+      });
+      setUploadProfilePhoto(file); 
     }
   };
 
-  // Handle background image change
   const handleBackgroundImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileInfo({ ...profileInfo, backgroundImage: reader.result });
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file); 
+      setProfileInfo({ 
+        ...profileInfo, 
+        backgroundImage: previewUrl 
+      });
+      setUploadBackgroundPhoto(file); 
     }
   };
+
+
 
   // Add new skill
   const handleAddSkill = () => {
@@ -80,6 +117,26 @@ const Profile = () => {
       skills: prev.skills.filter((_, i) => i !== index),
     }));
   };
+
+
+  useEffect(() => {
+    axios.get("/api/v1/user/profile").then((res) => {
+      console.log(res);
+      console.log(res.data.length);
+      console.log(res.data.email);
+
+      setProfileInfo({
+        name: res.data.name,
+        bio: res.data.bio,
+        location: res.data.location,
+        email: res.data.email,
+        phone: res.data.phone,
+        skills: res.data.skills,
+        profilePhoto: res.data.profilePhoto,
+        backgroundImage: res.data.backgroundImage,
+      });
+    });
+  }, []);
 
   return (
     <Section>
@@ -156,13 +213,17 @@ const Profile = () => {
                   onChange={handleProfileChange}
                   className="text-n-2 font-medium"
                 />
-                <input
+                {/* <input
                   type="email"
                   name="email"
                   value={profileInfo.email}
                   onChange={handleProfileChange}
                   className="text-gray-700 font-medium"
-                />
+                /> */}
+
+                <p className="text-gray-700 font-medium">
+                  📧 {profileInfo.email}
+                </p>
                 <input
                   type="text"
                   name="phone"
@@ -268,4 +329,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default StudentProfile;
