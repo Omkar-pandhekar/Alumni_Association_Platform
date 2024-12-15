@@ -58,6 +58,7 @@ const JobPosting = () => {
             text: "Job has been posted successfully",
             icon: "success",
             confirmButtonText: "OK",
+            confirmButtonColor: "#3085d6",
             customClass: {
               popup: "bg-n-7 text-white",
             },
@@ -83,7 +84,9 @@ const JobPosting = () => {
         text: "Something went wrong while posting the job",
         icon: "error",
         confirmButtonText: "OK",
-        background: "bg-n-8",
+        customClass: {
+          popup: "bg-n-7 text-white",
+        },
       });
     }
   };

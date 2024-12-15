@@ -7,13 +7,14 @@ import Button from "./Button";
 import Swal from "sweetalert2";
 
 const Fees = () => {
-
   useEffect(() => {
-    axios.get("/api/v1/donate/getAllStudentForm")
-    .then(response => {
-      console.log(response);
-    }).catch(err => console.log(err));
-  },[]);
+    axios
+      .get("/api/v1/donate/getAllStudentForm")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleFeesSelection = (person) => {
     setSelectedPerson(person);
@@ -72,7 +73,13 @@ const Fees = () => {
             type="tel"
             name="phoneNumber"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              // Validate that the phone number is 10 digits
+              if (/^\d{0,10}$/.test(value)) {
+                setPhoneNumber(value);
+              }
+            }}
             required
           />
           <ScholarshipTable onFeesSelect={handleFeesSelection} />

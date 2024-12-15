@@ -11,13 +11,18 @@ const Events = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get("/api/v1/event/getEvent");
-        if (Array.isArray(response.data)) {
-          setEvents(response.data);
-        } else if (Array.isArray(response.data.data)) {
-          setEvents(response.data.data);
-        } else {
-          setError("Invalid data format received");
-        }
+        let fetchedEvents = Array.isArray(response.data)
+          ? response.data
+          : response.data.data;
+
+        // Filter out events with a registration deadline older than one month
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        fetchedEvents = fetchedEvents.filter(
+          (item) => new Date(item.registrationDeadline) > oneMonthAgo
+        );
+
+        setEvents(fetchedEvents);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);

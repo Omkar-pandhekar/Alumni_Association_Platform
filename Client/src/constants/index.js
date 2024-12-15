@@ -293,9 +293,17 @@ export const AdminFeatures = [
   },
   {
     id: "6",
+    title: "Scholarship Forms",
+    text: "View Scholarship Forms submmited by students for scholarship approval.",
+    backgroundUrl: "./src/assets/benefits/card-1.svg",
+    iconUrl: benefitIcon2,
+    linkUrl: "/approvalhistory",
+  },
+  {
+    id: "7",
     title: "Donation History",
     text: "View Donation's history made by alumni and other community. ",
-    backgroundUrl: "./src/assets/benefits/card-6.svg",
+    backgroundUrl: "./src/assets/benefits/card-2.svg",
     iconUrl: benefitIcon2,
     linkUrl: "/donationhistory",
   },

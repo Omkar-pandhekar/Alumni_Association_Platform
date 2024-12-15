@@ -28,6 +28,8 @@ import DonationHistory from "./components/DonationHistory";
 import EmailSender from "./components/EmailSender";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import ScholarshipTable from "./components/ScholarshipTable";
+import ApprovalHistory from "./components/ApprovalForms";
 
 const Layout = () => {
   return (
@@ -154,16 +156,25 @@ const App = () => {
           element: <DonationHistory />,
         },
         {
-          path:"/emailSender",
-          element:<EmailSender/>,
+          path: "/emailSender",
+          element: <EmailSender />,
         },
         {
-          path:"/forgotpassword",
-          element:<ForgotPassword/>
-        },{
-          path:"/resetpassword/:token",
-          element:<ResetPassword/>
-        }
+          path: "/forgotpassword",
+          element: <ForgotPassword />,
+        },
+        {
+          path: "/resetpassword/:token",
+          element: <ResetPassword />,
+        },
+        {
+          path: "/scholarshiptable",
+          element: <ScholarshipTable />,
+        },
+        {
+          path: "/approvalhistory",
+          element: <ApprovalHistory />,
+        },
       ],
     },
   ]);

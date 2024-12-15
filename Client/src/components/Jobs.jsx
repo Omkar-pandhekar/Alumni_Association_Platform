@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Section from "./Section";
 import axios from "axios";
+import { formatDistanceToNow } from "date-fns";
 
 const AlumniStudentPosts = () => {
   const [jobPost, setJobPost] = useState([]);
@@ -76,11 +77,8 @@ const AlumniStudentPosts = () => {
                     </h3>
                     <span className="text-sm text-n-2">
                       {" "}
-                      {new Date(post.createdAt).toLocaleDateString("en-US", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
+                      {formatDistanceToNow(new Date(post.createdAt), {
+                        addSuffix: true,
                       })}
                     </span>
                   </div>

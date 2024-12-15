@@ -46,36 +46,37 @@ const PostEvents = () => {
         body: JSON.stringify(eventData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to post event");
+      if (response) {
+        var data = await response.json();
+        if (data.message) {
+          // Show success message using SweetAlert2
+          Swal.fire({
+            title: "Event Posted!",
+            text: "Your event has been successfully posted.",
+            icon: "success",
+            confirmButtonText: "Great!",
+            confirmButtonColor: "#3085d6",
+            showConfirmButton: true,
+            timer: 3000,
+            timerProgressBar: true,
+            toast: true,
+            position: "top-end",
+          });
+
+          // Reset form after successful submission
+          setEventData({
+            eventTitle: "",
+            organizerName: "",
+            eventLocation: "",
+            eventDate: "",
+            eventTime: "",
+            eventDescription: "",
+            eventCategory: "",
+            registrationLink: "",
+            registrationDeadline: "",
+          });
+        }
       }
-
-      // Reset form after successful submission
-      setEventData({
-        eventTitle: "",
-        organizerName: "",
-        eventLocation: "",
-        eventDate: "",
-        eventTime: "",
-        eventDescription: "",
-        eventCategory: "",
-        registrationLink: "",
-        registrationDeadline: "",
-      });
-
-      // Show success message using SweetAlert2
-      Swal.fire({
-        title: "Event Posted!",
-        text: "Your event has been successfully posted.",
-        icon: "success",
-        confirmButtonText: "Great!",
-        confirmButtonColor: "#3085d6",
-        showConfirmButton: true,
-        timer: 3000,
-        timerProgressBar: true,
-        toast: true,
-        position: "top-end",
-      });
     } catch (err) {
       setError(err.message);
       // Show error message using SweetAlert2
