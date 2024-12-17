@@ -6,8 +6,21 @@ import { jwtDecode } from "jwt-decode";
 const Profile = () => {
   const [editing, setEditing] = useState(false); // State for editing mode
   const [newSkill, setNewSkill] = useState([]); // State for adding new skill
+  const [uploadProfilePhoto,setUploadProfilePhoto] = useState();
+  const [uploadBackgroundPhoto,setUploadBackgroundPhoto] = useState();
+  
+
   //Pass here the object of profileInfo after logging in
-  const [profileInfo, setProfileInfo] = useState([]);
+  const [profileInfo, setProfileInfo] = useState({
+    name: "Rajat Ranvir",
+    bio: "Passionate software developer with 5 years of experience in building web applications. Skilled in React, Node.js, and JavaScript, always eager to learn and embrace new technologies.",
+    location: "San Francisco, CA",
+    email: "rajatranvir@gmail.com",
+    phone: "+1 234 567 890",
+    skills: ["React", "Node.js", "JavaScript", "Tailwind CSS", "MongoDB"],
+    profilePhoto: "https://via.placeholder.com/150", // Default profile photo
+    backgroundImage: "https://via.placeholder.com/800x200", // Default background image
+  });
 
   const [posts, setPosts] = useState([
     { id: 1, content: "Excited to start working on a new full-stack project!" },
@@ -21,73 +34,25 @@ const Profile = () => {
     { id: 3, name: "Clara Lee", relation: "Friend" },
   ]);
 
-  // useEffect(() => {
-  //   axios.get("/api/v1/user/profile").then((res) => {
-  //     console.log(res);
-  //     console.log(res.data.length);
-  //     console.log(res.data.email);
-
-  //     setProfileInfo({
-  //       name: res.data.name,
-  //       bio: res.data.bio,
-  //       location: res.data.location,
-  //       email: res.data.email,
-  //       phone: res.data.phone,
-  //       skills: res.data.skills,
-  //       profilePhoto: res.data.profilePhoto,
-  //       backgroundImage: res.data.backgroundImage,
-  //     });
-  //   });
-  // }, []);
-
   useEffect(() => {
-    var token = localStorage.getItem("authToken");
-    const decoded = jwtDecode(token);
-    console.log("Here", decoded);
-    const { email, role } = decoded;
-    const getUserProfileData = async () => {
-      try {
-        console.log(email, "and", role);
-        const response = await axios.get(
-          `/api/v1/user/userprofile?email=${decoded.email}&role=${decoded.role}`
-        );
-        var profileData;
-        console.log(response);
-        if (response) {
-          profileData = await response.data[0];
-          console.log("response data:", profileData);
-        }
+    axios.get("/api/v1/user/profile").then((res) => {
+      console.log(res);
+      console.log(res.data.length);
+      console.log(res.data.email);
 
-        if (!profileData.error) {
-          setProfileInfo({
-            name: decoded.fullName,
-            ...profileData,
-          });
-        } else {
-          setProfileInfo({
-            name: "Rajat Ranvir",
-            bio: "Add bio",
-            location: "San Francisco, CA",
-            email: "rajatranvir@gmail.com",
-            phone: "+1 234 567 890",
-            skills: [
-              "React",
-              "Node.js",
-              "JavaScript",
-              "Tailwind CSS",
-              "MongoDB",
-            ],
-            profilePhoto: "", // Default profile photo
-            backgroundImage: "", // Default background image
-          });
-        }
-      } catch (error) {
-        return console.log(error);
-      }
-    };
-    getUserProfileData();
-    console.log(profileInfo);
+      setProfileInfo({
+        name: res.data.name,
+        bio: res.data.bio,
+        location: res.data.location,
+        email: res.data.email,
+        phone: res.data.phone,
+        skills: res.data.skills,
+        profilePhoto: res.data.profilePhoto,
+        backgroundImage: res.data.backgroundImage,
+      });
+    });
   }, []);
+
 
   // Toggle editing mode
   const handleEditToggle = (e) => {
@@ -96,8 +61,8 @@ const Profile = () => {
     const formData = new FormData();
     // console.log(profileInfo.profilePhoto);
     console.log("inside handle toggle", profileInfo.skills);
-    formData.append("profilePhoto", profileInfo.profilePhoto);
-    formData.append("backgroundImage", profileInfo.backgroundImage);
+    formData.append("profilePhoto", uploadProfilePhoto);
+    formData.append("backgroundImage", uploadBackgroundPhoto);
     formData.append("name", profileInfo.name);
     formData.append("bio", profileInfo.bio);
     formData.append("location", profileInfo.location);
@@ -108,7 +73,7 @@ const Profile = () => {
     // console.log(formData);
     if (editing) {
       axios
-        .post("/api/v1/user/setprofile", formData, {
+        .put("/api/v1/user/setprofile", formData, {
           headers: {
             "content-Type": "multipart/form-data",
           },
@@ -128,56 +93,45 @@ const Profile = () => {
     setProfileInfo({ ...profileInfo, [e.target.name]: e.target.value });
   };
 
-  // // Handle profile photo change
-  // const handleProfilePhotoChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setProfileInfo({ ...profileInfo, profilePhoto: reader.result });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
-  // // Handle background image change
-  // const handleBackgroundImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setProfileInfo({ ...profileInfo, backgroundImage: reader.result });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
-  // New Functions for the profile and Background image
-  // Handle profile photo change
+  
+
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileInfo({ ...profileInfo, profilePhoto: file });
+      const previewUrl = URL.createObjectURL(file); 
+      setProfileInfo({ 
+        ...profileInfo, 
+        profilePhoto: previewUrl 
+      });
+      setUploadProfilePhoto(file);
     }
   };
 
-  // Handle background image change
   const handleBackgroundImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileInfo({ ...profileInfo, backgroundImage: file });
+      const previewUrl = URL.createObjectURL(file); 
+      setProfileInfo({ 
+        ...profileInfo, 
+        backgroundImage: previewUrl 
+      });
+      setUploadBackgroundPhoto(file); 
     }
   };
+  
+  
+  
 
   // Add new skill
   const handleAddSkill = () => {
     if (newSkill.trim()) {
-      const skillsToAdd = newSkill.split(",").map((skill) => skill.trim()); // Split by comma and trim whitespace
       setProfileInfo((prev) => ({
         ...prev,
-        skills: [...prev.skills, ...skillsToAdd], // Spread the new skills into the existing array
+        skills: [...prev.skills, newSkill.trim()],
       }));
-      setNewSkill(""); // Clear the input after adding
+      setNewSkill("");
     }
   };
 
@@ -272,13 +226,15 @@ const Profile = () => {
                   onChange={handleProfileChange}
                   className="text-n-2 font-medium"
                 />
-                <input
+                {/* <input
                   type="email"
                   name="email"
                   value={profileInfo.email}
                   onChange={handleProfileChange}
                   className="text-n-2 font-medium"
-                />
+                /> */}
+                <p className="text-n-2 font-medium">📧 {profileInfo.email}</p>
+
                 <input
                   type="text"
                   name="phone"
@@ -309,22 +265,21 @@ const Profile = () => {
         <div className="mt-6">
           <h2 className="text-2xl font-semibold text-n-1 mb-4">Skills</h2>
           <div className="flex flex-wrap gap-2">
-            {Array.isArray(profileInfo.skills) &&
-              profileInfo.skills.map((skill, index) => (
-                <div key={index} className="flex items-center">
-                  <span className="px-3 py-1 bg-blue-500 text-white rounded-full">
-                    {skill}
-                  </span>
-                  {editing && (
-                    <button
-                      onClick={() => handleRemoveSkill(index)}
-                      className="text-red-500 hover:text-red-700 ml-2"
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
-              ))}
+            {profileInfo.skills.map((skill, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <span className="px-3 py-1 bg-blue-500 text-white rounded-full">
+                  {skill}
+                </span>
+                {editing && (
+                  <button
+                    onClick={() => handleRemoveSkill(index)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
           {editing && (

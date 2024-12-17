@@ -7,8 +7,8 @@ import {
   postLogin,
   postRegister,
   postResetPassword,
-  postSetProfile,
-  postSetProfileStudent,
+  putSetProfile,
+  putSetProfileStudent,
   updateUser,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
@@ -25,15 +25,15 @@ router.post("/signup", postRegister);
 router.post("/login", postLogin);
 router.post("/forgotpassword",postForgotPassword);
 router.post("/resetpassword/:token",postResetPassword);
-// router.post('/setprofile',upload.fields([{name:'profilePhoto'},{name:'backgroundImage'}]),postSetProfile);
-router.post(
+
+router.put(
   "/setprofile",
   isAuthenticated,
   upload.fields([
     { name: "profilePhoto", maxCount: 1 },
     { name: "backgroundImage", maxCount: 1 },
   ]),
-  postSetProfile
+  putSetProfile
 );
 router.post(
   "/updateprofile",
@@ -45,14 +45,14 @@ router.post(
   updateUser
 );
 
-router.post(
+router.put(
   "/setprofilestudent",
   isAuthenticated,
   upload.fields([
     { name: "profilePhoto", maxCount: 1 },
     { name: "backgroundImage", maxCount: 1 },
   ]),
-  postSetProfileStudent
+  putSetProfileStudent
 );
 
 export default router;

@@ -27,15 +27,16 @@ const Fees = () => {
   //     fees: selectedPerson.fees,
   //   };
   const [phoneNumber, setPhoneNumber] = useState();
-
+  const [payFee, setPayFee] = useState();
   const FeesHandle = (e) => {
     e.preventDefault();
     console.log(selectedPerson);
     axios
       .post("/api/v1/donate/fees", {
-        studentName: selectedPerson.name,
-        category: selectedPerson.category,
-        fees: selectedPerson.fees,
+        studentName: selectedPerson.fullName,
+        category: selectedPerson.caste,
+        fees: selectedPerson.annualFee,
+        payFee,
         phoneNumber,
       })
       .then((result) => {
@@ -87,10 +88,19 @@ const Fees = () => {
           {selectedPerson && (
             <div className="mb-5">
               <h3 className="text-lg font-semibold">
-                Selected Student: {selectedPerson.name}
+                Selected Student: {selectedPerson.fullName}
               </h3>
-              <p>Category: {selectedPerson.category}</p>
-              <p>Fees: ${selectedPerson.fees}</p>
+              <p>Category: {selectedPerson.caste}</p>
+              <p>Fees: ${selectedPerson.annualFee}</p>
+              <input
+                placeholder="You can Contribute"
+                className="bg-n-7 text-n-3 border-0 rounded-md p-2 mb-4 focus:bg-n-7 focus:outline-none focus:ring-1 focus:ring-n-5 transition ease-in-out duration-150"
+                type="tel"
+                name="payFee"
+                value={payFee}
+                onChange={(e) => setPayFee(e.target.value)}
+                required
+              />
             </div>
           )}
           <Button className="hidden lg:flex">Pay</Button>

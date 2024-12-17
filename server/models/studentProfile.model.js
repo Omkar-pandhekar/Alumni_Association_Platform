@@ -10,4 +10,4 @@ const studentProfileSchema = new mongoose.Schema({
     backgroundImage:String,
     // createdAt:new Date.now(),
 },{timestamps:true});
-export const studentProfile = mongoose.model("studentProfile",studentProfileSchema);
+export const StudentProfile = mongoose.model("StudentProfileDB",studentProfileSchema);

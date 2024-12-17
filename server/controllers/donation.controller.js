@@ -15,7 +15,7 @@ export const postInfrastructure = async (req, res) => {
 
 export const postFees = async (req, res) => {
   console.log("here");
-  const { studentName, category, fees, phoneNumber } = req.body;
+  const { studentName, category, fees, payFee,phoneNumber } = req.body;
 
   // For the Testing purpose
   const userId = req.user;
@@ -24,11 +24,12 @@ export const postFees = async (req, res) => {
   console.log(req.params.id);
   // The above must be deleted
 
-  console.log(studentName, category, fees, phoneNumber);
+  console.log(studentName, category, fees, payFee,phoneNumber);
   await Fee.create({
     studentName,
     category,
     fees,
+    payFee,
     phoneNumber,
   });
   res.json("One Data Created !");
@@ -100,4 +101,22 @@ export const getAllStudentFormDetails = async (req,res) => {
     })
   }
 
+}
+
+export const getInfraFees = async (req,res) => {
+  try {
+    const infraFee = await Infra.find();
+    return res.status(200).json({
+      success:true,
+      message:"Get All Infra Fees !",
+      infraFee  
+      });
+
+    
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
 }
