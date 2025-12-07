@@ -10,7 +10,7 @@ import AlumniTable from "./components/AlumniTable";
 import AlumniDirectory from "./components/AlumniDirectory";
 import AdminProfile from "./pages/AdminProfile";
 import Donation from "./components/Donation";
-import ProtectedRoute from "./components/ProtectedRoutes";
+// import ProtectedRoute from "./components/ProtectedRoutes";
 // import StudentProfile from "./components/StudentProfile";
 import Contact from "./components/Contact";
 import Alumni from "./pages/Alumni";
@@ -28,6 +28,9 @@ import DonationHistory from "./components/DonationHistory";
 import EmailSender from "./components/EmailSender";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import StudentProfile from "./components/StudentProfile";
+import AboutUs from "./components/AboutUs";
+import ApprovalHistory from "./components/ApprovalForms";
 
 const Layout = () => {
   return (
@@ -180,6 +183,10 @@ const App = () => {
         {
           path: "/resetpassword/:token",
           element: <ResetPassword />,
+        },
+        {
+          path: "/approvalhistory",
+          element: <ApprovalHistory />,
         },
       ],
     },

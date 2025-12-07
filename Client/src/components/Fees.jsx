@@ -44,6 +44,10 @@ const Fees = () => {
         Swal.fire({
           title: "Success!",
           text: "Thank you for your donation!",
+          customClass: {
+            popup: "bg-n-7 text-white",
+          },
+          confirmButtonColor: "#3085d6",
           icon: "success",
           confirmButtonText: "OK",
         });
